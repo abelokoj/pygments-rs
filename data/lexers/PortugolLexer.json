@@ -1,0 +1,1 @@
+{"class":"PortugolLexer","name":"Portugol","module":"pascal","aliases":["portugol"],"filenames":[["*.alg","(?s:.*\\.alg)\\Z"],["*.portugol","(?s:.*\\.portugol)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://www.apoioinformatica.inf.br/produtos/visualg/linguagem","kind":"custom","override":"PortugolLexer"}

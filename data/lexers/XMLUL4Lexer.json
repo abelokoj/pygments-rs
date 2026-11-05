@@ -1,0 +1,1 @@
+{"class":"XMLUL4Lexer","name":"XML+UL4","module":"ul4","aliases":["xml+ul4"],"filenames":[["*.xmlul4","(?s:.*\\.xmlul4)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://python.livinglogic.de/UL4.html","kind":"delegating","root":"XmlLexer","language":"UL4Lexer","needle":"Token.Other"}

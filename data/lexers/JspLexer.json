@@ -1,0 +1,1 @@
+{"class":"JspLexer","name":"Java Server Page","module":"templates","aliases":["jsp"],"filenames":[["*.jsp","(?s:.*\\.jsp)\\Z"]],"alias_filenames":[],"mimetypes":["application/x-jsp"],"priority":0.0,"url":"https://projects.eclipse.org/projects/ee4j.jsp","kind":"delegating","root":"XmlLexer","language":"JspRootLexer","needle":"Token.Other","analyse_custom":"JspLexer"}

@@ -1,0 +1,1 @@
+{"class":"CheetahHtmlLexer","name":"HTML+Cheetah","module":"templates","aliases":["html+cheetah","html+spitfire","htmlcheetah"],"filenames":[],"alias_filenames":[],"mimetypes":["text/html+cheetah","text/html+spitfire"],"priority":0.0,"url":"http://www.cheetahtemplate.org/","kind":"delegating","root":"HtmlLexer","language":"CheetahLexer","needle":"Token.Other"}

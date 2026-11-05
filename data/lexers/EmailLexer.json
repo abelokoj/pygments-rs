@@ -1,0 +1,1 @@
+{"class":"EmailLexer","name":"E-mail","module":"email","aliases":["email","eml"],"filenames":[["*.eml","(?s:.*\\.eml)\\Z"]],"alias_filenames":[],"mimetypes":["message/rfc822"],"priority":0.0,"url":"https://en.wikipedia.org/wiki/Email#Message_format","kind":"delegating","root":"EmailHeaderLexer","language":"MIMELexer","needle":"Token.Comment"}

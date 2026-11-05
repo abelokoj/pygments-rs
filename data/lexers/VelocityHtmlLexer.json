@@ -1,0 +1,1 @@
+{"class":"VelocityHtmlLexer","name":"HTML+Velocity","module":"templates","aliases":["html+velocity"],"filenames":[],"alias_filenames":[["*.html","(?s:.*\\.html)\\Z"],["*.fhtml","(?s:.*\\.fhtml)\\Z"]],"mimetypes":["text/html+velocity"],"priority":0.0,"url":"https://velocity.apache.org/","kind":"delegating","root":"HtmlLexer","language":"VelocityLexer","needle":"Token.Other"}

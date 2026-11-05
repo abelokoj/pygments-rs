@@ -1,0 +1,1 @@
+{"class":"MyghtyCssLexer","name":"CSS+Myghty","module":"templates","aliases":["css+myghty"],"filenames":[],"alias_filenames":[],"mimetypes":["text/css+myghty"],"priority":0.0,"url":"http://www.myghty.org/","kind":"delegating","root":"CssLexer","language":"MyghtyLexer","needle":"Token.Other"}

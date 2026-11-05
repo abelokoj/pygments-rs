@@ -1,0 +1,2 @@
+# Golden test files that must keep passing (one id per line).
+# Refresh from target/golden-passing.txt after a CI run.

@@ -1,0 +1,1 @@
+{"class":"TeaTemplateLexer","name":"Tea","module":"templates","aliases":["tea"],"filenames":[["*.tea","(?s:.*\\.tea)\\Z"]],"alias_filenames":[],"mimetypes":["text/x-tea"],"priority":0.0,"url":"https://github.com/teatrove/teatrove","kind":"delegating","root":"XmlLexer","language":"TeaTemplateRootLexer","needle":"Token.Other","analyse_custom":"TeaTemplateLexer"}

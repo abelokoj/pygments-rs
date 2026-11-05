@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  lint:
+    name: fmt + clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all --check
+      - run: cargo clippy --all-targets -- -D warnings
+
+  test:
+    name: test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Fetch Pygments test files for the bundled version
+        shell: bash
+        run: |
+          version="$(tr -d '[:space:]' < PYGMENTS_VERSION)"
+          git clone --quiet --depth 1 --branch "$version" https://github.com/pygments/pygments.git "$RUNNER_TEMP/pygments"
+          echo "PYGMENTS_TESTS=$RUNNER_TEMP/pygments/tests" >> "$GITHUB_ENV"
+      - run: cargo test --all-targets
+      - run: cargo test --doc
+      - name: Publish reports
+        if: always()
+        shell: bash
+        run: |
+          [ -f target/golden-report.md ] && cat target/golden-report.md >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.os == 'ubuntu-latest'
+        with:
+          name: reports
+          path: |
+            target/golden-report.md
+            target/golden-passing.txt
+            target/catalog-report.txt
+          if-no-files-found: ignore
+
+  data:
+    name: converted data is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Re-run the converter and compare
+        run: |
+          version="$(tr -d '[:space:]' < PYGMENTS_VERSION)"
+          git clone --quiet --depth 1 --branch "$version" https://github.com/pygments/pygments.git "$RUNNER_TEMP/pygments"
+          python -I tools/convert.py --pygments "$RUNNER_TEMP/pygments"
+          git diff --stat --exit-code -- data src/generated PYGMENTS_VERSION

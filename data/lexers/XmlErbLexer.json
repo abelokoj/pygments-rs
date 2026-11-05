@@ -1,0 +1,1 @@
+{"class":"XmlErbLexer","name":"XML+Ruby","module":"templates","aliases":["xml+ruby","xml+erb"],"filenames":[],"alias_filenames":[["*.xml","(?s:.*\\.xml)\\Z"]],"mimetypes":["application/xml+ruby"],"priority":0.0,"url":"https://github.com/ruby/erb","kind":"delegating","root":"XmlLexer","language":"ErbLexer","needle":"Token.Other","analyse_custom":"XmlErbLexer"}

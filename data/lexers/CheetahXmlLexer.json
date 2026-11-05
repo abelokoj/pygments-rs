@@ -1,0 +1,1 @@
+{"class":"CheetahXmlLexer","name":"XML+Cheetah","module":"templates","aliases":["xml+cheetah","xml+spitfire"],"filenames":[],"alias_filenames":[],"mimetypes":["application/xml+cheetah","application/xml+spitfire"],"priority":0.0,"url":"http://www.cheetahtemplate.org/","kind":"delegating","root":"XmlLexer","language":"CheetahLexer","needle":"Token.Other"}

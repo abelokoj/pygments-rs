@@ -1,0 +1,1 @@
+{"class":"CObjdumpLexer","name":"c-objdump","module":"asm","aliases":["c-objdump"],"filenames":[["*.c-objdump","(?s:.*\\.c\\-objdump)\\Z"]],"alias_filenames":[],"mimetypes":["text/x-c-objdump"],"priority":0.0,"url":"https://www.gnu.org/software/binutils","kind":"delegating","root":"CLexer","language":"ObjdumpLexer","needle":"Token.Other"}

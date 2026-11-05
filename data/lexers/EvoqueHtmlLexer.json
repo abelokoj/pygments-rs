@@ -1,0 +1,1 @@
+{"class":"EvoqueHtmlLexer","name":"HTML+Evoque","module":"templates","aliases":["html+evoque"],"filenames":[],"alias_filenames":[["*.html","(?s:.*\\.html)\\Z"]],"mimetypes":["text/html+evoque"],"priority":0.0,"url":"https://gizmojo.org/templating","kind":"delegating","root":"HtmlLexer","language":"EvoqueLexer","needle":"Token.Other","analyse_custom":"EvoqueHtmlLexer"}

@@ -1,0 +1,1 @@
+{"class":"JavascriptUL4Lexer","name":"Javascript+UL4","module":"ul4","aliases":["js+ul4"],"filenames":[["*.jsul4","(?s:.*\\.jsul4)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://python.livinglogic.de/UL4.html","kind":"delegating","root":"JavascriptLexer","language":"UL4Lexer","needle":"Token.Other"}

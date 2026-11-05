@@ -1,0 +1,1 @@
+{"class":"RagelCLexer","name":"Ragel in C Host","module":"parsers","aliases":["ragel-c"],"filenames":[["*.rl","(?s:.*\\.rl)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"http://www.colm.net/open-source/ragel/","kind":"delegating","root":"CLexer","language":"RagelEmbeddedLexer","needle":"Token.Other"}

@@ -1,0 +1,1 @@
+{"class":"CssPhpLexer","name":"CSS+PHP","module":"templates","aliases":["css+php"],"filenames":[],"alias_filenames":[["*.css","(?s:.*\\.css)\\Z"]],"mimetypes":["text/css+php"],"priority":0.0,"url":"https://www.php.net","kind":"delegating","root":"CssLexer","language":"PhpLexer","needle":"Token.Other","analyse_custom":"CssPhpLexer"}

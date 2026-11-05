@@ -1,0 +1,1 @@
+{"class":"MyghtyXmlLexer","name":"XML+Myghty","module":"templates","aliases":["xml+myghty"],"filenames":[],"alias_filenames":[],"mimetypes":["application/xml+myghty"],"priority":0.0,"url":"http://www.myghty.org/","kind":"delegating","root":"XmlLexer","language":"MyghtyLexer","needle":"Token.Other"}

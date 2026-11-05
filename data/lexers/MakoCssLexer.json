@@ -1,0 +1,1 @@
+{"class":"MakoCssLexer","name":"CSS+Mako","module":"templates","aliases":["css+mako"],"filenames":[],"alias_filenames":[],"mimetypes":["text/css+mako"],"priority":0.0,"url":"http://www.makotemplates.org/","kind":"delegating","root":"CssLexer","language":"MakoLexer","needle":"Token.Other"}

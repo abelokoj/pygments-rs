@@ -1,0 +1,1 @@
+{"class":"SlashLexer","name":"Slash","module":"slash","aliases":["slash"],"filenames":[["*.sla","(?s:.*\\.sla)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://github.com/arturadib/Slash-A","kind":"delegating","root":"HtmlLexer","language":"SlashLanguageLexer","needle":"Token.Other"}

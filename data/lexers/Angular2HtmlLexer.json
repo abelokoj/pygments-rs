@@ -1,0 +1,1 @@
+{"class":"Angular2HtmlLexer","name":"HTML + Angular2","module":"templates","aliases":["html+ng2"],"filenames":[["*.ng2","(?s:.*\\.ng2)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://angular.io/guide/template-syntax","kind":"delegating","root":"HtmlLexer","language":"Angular2Lexer","needle":"Token.Other"}

@@ -1,0 +1,1 @@
+{"class":"AntlrCppLexer","name":"ANTLR With CPP Target","module":"parsers","aliases":["antlr-cpp"],"filenames":[["*.G","(?s:.*\\.G)\\Z"],["*.g","(?s:.*\\.g)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://www.antlr.org","kind":"delegating","root":"CppLexer","language":"AntlrLexer","needle":"Token.Other","analyse_custom":"AntlrCppLexer"}

@@ -1,0 +1,1 @@
+{"class":"LassoCssLexer","name":"CSS+Lasso","module":"templates","aliases":["css+lasso"],"filenames":[],"alias_filenames":[["*.css","(?s:.*\\.css)\\Z"]],"mimetypes":["text/css+lasso"],"priority":0.0,"url":"https://www.lassosoft.com","kind":"delegating","root":"CssLexer","language":"LassoLexer","needle":"Token.Other","analyse_custom":"LassoCssLexer"}

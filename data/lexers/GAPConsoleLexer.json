@@ -1,0 +1,1 @@
+{"class":"GAPConsoleLexer","name":"GAP session","module":"algebra","aliases":["gap-console","gap-repl"],"filenames":[["*.tst","(?s:.*\\.tst)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://www.gap-system.org","kind":"custom","override":"GAPConsoleLexer","consts":{"options":{}}}

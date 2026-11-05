@@ -1,0 +1,1 @@
+{"class":"EvoqueXmlLexer","name":"XML+Evoque","module":"templates","aliases":["xml+evoque"],"filenames":[],"alias_filenames":[["*.xml","(?s:.*\\.xml)\\Z"]],"mimetypes":["application/xml+evoque"],"priority":0.0,"url":"https://gizmojo.org/templating","kind":"delegating","root":"XmlLexer","language":"EvoqueLexer","needle":"Token.Other","analyse_custom":"EvoqueXmlLexer"}

@@ -1,0 +1,1 @@
+{"class":"TwigHtmlLexer","name":"HTML+Twig","module":"templates","aliases":["html+twig"],"filenames":[["*.twig","(?s:.*\\.twig)\\Z"]],"alias_filenames":[],"mimetypes":["text/html+twig"],"priority":0.0,"url":"https://twig.symfony.com","kind":"delegating","root":"HtmlLexer","language":"TwigLexer","needle":"Token.Other"}

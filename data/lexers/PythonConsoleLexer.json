@@ -1,0 +1,1 @@
+{"class":"PythonConsoleLexer","name":"Python console session","module":"python","aliases":["pycon","python-console"],"filenames":[],"alias_filenames":[],"mimetypes":["text/x-python-doctest"],"priority":0.0,"url":"https://python.org","kind":"delegating","root":"PythonTracebackLexer","language":"_ReplaceInnerCode","needle":"Token.Other.Traceback"}

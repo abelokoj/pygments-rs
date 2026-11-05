@@ -1,0 +1,1 @@
+{"class":"SspLexer","name":"Scalate Server Page","module":"templates","aliases":["ssp"],"filenames":[["*.ssp","(?s:.*\\.ssp)\\Z"]],"alias_filenames":[],"mimetypes":["application/x-ssp"],"priority":0.0,"url":"https://scalate.github.io/scalate/","kind":"delegating","root":"XmlLexer","language":"JspRootLexer","needle":"Token.Other","analyse_custom":"SspLexer"}

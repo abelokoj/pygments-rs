@@ -1,0 +1,1 @@
+{"class":"ErbLexer","name":"ERB","module":"templates","aliases":["erb"],"filenames":[],"alias_filenames":[],"mimetypes":["application/x-ruby-templating"],"priority":0.0,"url":"https://github.com/ruby/erb","kind":"custom","override":"ErbLexer","consts":{"_block_re":{"regex":"(<%%|%%>|<%=|<%#|<%-|<%|-%>|%>|^%[^%].*?$)","flags":"m"}}}

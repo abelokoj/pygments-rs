@@ -1,0 +1,1 @@
+{"class":"RawTokenLexer","name":"Raw token data","module":"special","aliases":[],"filenames":[],"alias_filenames":[],"mimetypes":["application/x-pygments-tokens"],"priority":0.0,"url":"https://pygments.org/docs/formatters/#RawTokenFormatter","kind":"custom","override":"RawTokenLexer","consts":{"_ttype_cache":{},"compress":"","line_re":{"regex":".*?\n","flags":""}}}

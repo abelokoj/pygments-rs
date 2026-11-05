@@ -1,0 +1,1 @@
+{"class":"NodeConsoleLexer","name":"Node.js REPL console session","module":"javascript","aliases":["nodejsrepl"],"filenames":[],"alias_filenames":[],"mimetypes":["text/x-nodejsrepl"],"priority":0.0,"url":"https://nodejs.org","kind":"custom","override":"NodeConsoleLexer","consts":{"line_re":{"regex":".*?\n","flags":""},"options":{}}}

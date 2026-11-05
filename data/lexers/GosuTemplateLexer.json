@@ -1,0 +1,1 @@
+{"class":"GosuTemplateLexer","name":"Gosu Template","module":"jvm","aliases":["gst"],"filenames":[["*.gst","(?s:.*\\.gst)\\Z"]],"alias_filenames":[],"mimetypes":["text/x-gosu-template"],"priority":0.0,"url":"https://gosu-lang.github.io","kind":"custom","override":"GosuTemplateLexer"}

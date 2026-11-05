@@ -1,0 +1,1 @@
+{"class":"PsyshConsoleLexer","name":"PsySH console session for PHP","module":"php","aliases":["psysh"],"filenames":[],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://psysh.org/","kind":"custom","override":"PsyshConsoleLexer","consts":{"line_re":{"regex":".*?\n","flags":""},"options":{"startinline":true}}}

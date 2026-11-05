@@ -1,0 +1,1077 @@
+{
+ "ABAPLexer": [],
+ "AMDGPULexer": [],
+ "APLLexer": [],
+ "AbnfLexer": [],
+ "ActionScript3Lexer": [],
+ "ActionScriptLexer": [],
+ "AdaLexer": [],
+ "AdlLexer": [],
+ "AgdaLexer": [],
+ "AheuiLexer": [],
+ "AlloyLexer": [],
+ "AmbientTalkLexer": [],
+ "AmplLexer": [],
+ "Angular2HtmlLexer": [],
+ "Angular2Lexer": [],
+ "AntlrActionScriptLexer": [
+  "analyse_text (AntlrActionScriptLexer: condition AntlrLexer.analyse_text(text))"
+ ],
+ "AntlrCSharpLexer": [
+  "analyse_text (AntlrCSharpLexer: condition AntlrLexer.analyse_text(text))"
+ ],
+ "AntlrCppLexer": [
+  "analyse_text (AntlrCppLexer: condition AntlrLexer.analyse_text(text))"
+ ],
+ "AntlrJavaLexer": [
+  "analyse_text (AntlrJavaLexer: condition AntlrLexer.analyse_text(text))"
+ ],
+ "AntlrLexer": [],
+ "AntlrObjectiveCLexer": [
+  "analyse_text (AntlrObjectiveCLexer: condition AntlrLexer.analyse_text(text))"
+ ],
+ "AntlrPerlLexer": [
+  "analyse_text (AntlrPerlLexer: condition AntlrLexer.analyse_text(text))"
+ ],
+ "AntlrPythonLexer": [
+  "analyse_text (AntlrPythonLexer: condition AntlrLexer.analyse_text(text))"
+ ],
+ "AntlrRubyLexer": [
+  "analyse_text (AntlrRubyLexer: condition AntlrLexer.analyse_text(text))"
+ ],
+ "ApacheConfLexer": [],
+ "AppleScriptLexer": [],
+ "ArduinoLexer": [
+  "get_tokens_unprocessed override in ArduinoLexer"
+ ],
+ "ArrowLexer": [],
+ "ArturoLexer": [
+  "callback arturo::ArturoLexer.handle_annotated_strings"
+ ],
+ "AscLexer": [],
+ "Asn1Lexer": [],
+ "AspectJLexer": [
+  "get_tokens_unprocessed override in AspectJLexer"
+ ],
+ "AsymptoteLexer": [
+  "get_tokens_unprocessed override in AsymptoteLexer"
+ ],
+ "AugeasLexer": [],
+ "AutoItLexer": [],
+ "AutohotkeyLexer": [],
+ "AwkLexer": [],
+ "BBCBasicLexer": [],
+ "BBCodeLexer": [],
+ "BCLexer": [],
+ "BQNLexer": [],
+ "BSTLexer": [],
+ "BareLexer": [],
+ "BaseMakefileLexer": [],
+ "BashLexer": [],
+ "BashSessionLexer": [
+  "custom lexer (ShellSessionBaseLexer.get_tokens_unprocessed)"
+ ],
+ "BatchLexer": [],
+ "BddLexer": [],
+ "BefungeLexer": [],
+ "BerryLexer": [],
+ "BibTeXLexer": [
+  "callback bibtex::BibTeXLexer.close_brace_callback",
+  "callback bibtex::BibTeXLexer.open_brace_callback"
+ ],
+ "BlitzBasicLexer": [],
+ "BlitzMaxLexer": [],
+ "BlueprintLexer": [],
+ "BnfLexer": [],
+ "BoaLexer": [],
+ "BooLexer": [],
+ "BoogieLexer": [],
+ "BrainfuckLexer": [
+  "analyse_text (BrainfuckLexer: statement plus_minus_count = 0)"
+ ],
+ "BugsLexer": [],
+ "CAmkESLexer": [],
+ "CLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "CMakeLexer": [
+  "analyse_text (CMakeLexer: statement exp = '^[ \\\\t]*CMAKE_MINIMUM_REQUIRED[ \\\\t]*\\\\([ \\\\t]*VERSION[ \\\\t]*\\\\d+(\\\\.\\\\d+)*[ \\\\t]*([ \\\\t]FATAL_ERROR)?[ \\\\t]*\\\\)[ \\\\t]*(#[^\\\\n]*)?$')"
+ ],
+ "CObjdumpLexer": [],
+ "CPSALexer": [],
+ "CSSUL4Lexer": [],
+ "CSharpAspxLexer": [
+  "analyse_text (CSharpAspxLexer: statement if re.search('Page\\\\s*Language=\"C#\"', text, re.I) is not None:)"
+ ],
+ "CSharpLexer": [],
+ "Ca65Lexer": [],
+ "CadlLexer": [],
+ "CapDLLexer": [],
+ "CapnProtoLexer": [],
+ "CarbonLexer": [
+  "analyse_text (CarbonLexer: statement result = 0)"
+ ],
+ "CbmBasicV2Lexer": [],
+ "CddlLexer": [],
+ "CeylonLexer": [],
+ "Cfengine3Lexer": [],
+ "ChaiscriptLexer": [],
+ "ChapelLexer": [],
+ "CharmciLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "CheetahHtmlLexer": [],
+ "CheetahJavascriptLexer": [],
+ "CheetahLexer": [],
+ "CheetahXmlLexer": [],
+ "CirruLexer": [],
+ "ClayLexer": [],
+ "CleanLexer": [],
+ "ClojureLexer": [],
+ "ClojureScriptLexer": [],
+ "CobolFreeformatLexer": [],
+ "CobolLexer": [],
+ "CodeQLLexer": [],
+ "CoffeeScriptLexer": [],
+ "ColdfusionCFCLexer": [],
+ "ColdfusionHtmlLexer": [],
+ "ColdfusionLexer": [],
+ "Comal80Lexer": [],
+ "CommonLispLexer": [
+  "get_tokens_unprocessed override in CommonLispLexer"
+ ],
+ "ComponentPascalLexer": [
+  "analyse_text (ComponentPascalLexer: statement result = 0)"
+ ],
+ "CoqLexer": [],
+ "CplintLexer": [],
+ "CppLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "CppObjdumpLexer": [],
+ "CrmshLexer": [],
+ "CrocLexer": [],
+ "CryptolLexer": [
+  "get_tokens_unprocessed override in CryptolLexer"
+ ],
+ "CrystalLexer": [
+  "callback crystal::CrystalLexer.heredoc_callback"
+ ],
+ "CsoundDocumentLexer": [],
+ "CsoundOrchestraLexer": [
+  "callback csound::CsoundOrchestraLexer.name_callback",
+  "callback csound::CsoundOrchestraLexer.opcode_name_callback"
+ ],
+ "CsoundScoreLexer": [],
+ "CssDjangoLexer": [
+  "analyse_text (CssDjangoLexer: condition DjangoLexer.analyse_text(text) - 0.05)"
+ ],
+ "CssErbLexer": [
+  "analyse_text (CssErbLexer: condition ErbLexer.analyse_text(text) - 0.05)"
+ ],
+ "CssGenshiLexer": [
+  "analyse_text (CssGenshiLexer: condition GenshiLexer.analyse_text(text) - 0.05)"
+ ],
+ "CssLexer": [],
+ "CssPhpLexer": [
+  "analyse_text (CssPhpLexer: condition PhpLexer.analyse_text(text) - 0.05)"
+ ],
+ "CssSmartyLexer": [
+  "analyse_text (CssSmartyLexer: condition SmartyLexer.analyse_text(text) - 0.05)"
+ ],
+ "CudaLexer": [
+  "get_tokens_unprocessed override in CudaLexer"
+ ],
+ "CypherLexer": [],
+ "CythonLexer": [],
+ "DLexer": [],
+ "DObjdumpLexer": [],
+ "DarcsPatchLexer": [],
+ "DartLexer": [],
+ "Dasm16Lexer": [
+  "callback asm::Dasm16Lexer.guess_identifier"
+ ],
+ "DaxLexer": [],
+ "DebianControlLexer": [],
+ "DebianSourcesLexer": [],
+ "DelphiLexer": [
+  "custom lexer (DelphiLexer.get_tokens_unprocessed)"
+ ],
+ "DesktopLexer": [
+  "analyse_text (DesktopLexer: condition re.search('^\\\\[Desktop Entry\\\\][ \\\\t]*$', text[:500], re.MULTILINE) is not None)"
+ ],
+ "DevicetreeLexer": [],
+ "DgLexer": [],
+ "DiffLexer": [
+  "analyse_text (DiffLexer: condition text[:7] == 'Index: ')"
+ ],
+ "DjangoLexer": [
+  "analyse_text (DjangoLexer: statement rv = 0.0)"
+ ],
+ "DnsZoneLexer": [],
+ "DockerLexer": [],
+ "DtdLexer": [],
+ "DuelLexer": [],
+ "DylanConsoleLexer": [
+  "custom lexer (DylanConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "DylanLexer": [
+  "get_tokens_unprocessed override in DylanLexer"
+ ],
+ "DylanLidLexer": [],
+ "ECLLexer": [
+  "analyse_text (ECLLexer: statement result = 0)"
+ ],
+ "ECLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "EarlGreyLexer": [],
+ "EasytrieveLexer": [
+  "analyse_text (EasytrieveLexer: statement result = 0.0)"
+ ],
+ "EbnfLexer": [],
+ "EiffelLexer": [],
+ "ElixirConsoleLexer": [
+  "custom lexer (ElixirConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "ElixirLexer": [
+  "get_tokens_unprocessed override in ElixirLexer"
+ ],
+ "ElmLexer": [],
+ "ElpiLexer": [],
+ "EmacsLispLexer": [
+  "get_tokens_unprocessed override in EmacsLispLexer"
+ ],
+ "EmailLexer": [],
+ "ErbLexer": [
+  "custom lexer (ErbLexer.get_tokens_unprocessed)"
+ ],
+ "ErlangLexer": [],
+ "ErlangShellLexer": [
+  "custom lexer (ErlangShellLexer.get_tokens_unprocessed)"
+ ],
+ "EvoqueHtmlLexer": [
+  "analyse_text (EvoqueHtmlLexer: condition EvoqueLexer.analyse_text(text))"
+ ],
+ "EvoqueLexer": [],
+ "EvoqueXmlLexer": [
+  "analyse_text (EvoqueXmlLexer: condition EvoqueLexer.analyse_text(text))"
+ ],
+ "ExeclineLexer": [],
+ "EzhilLexer": [
+  "analyse_text (EzhilLexer: condition len(re.findall('[\\\\u0b80-\\\\u0bff]', text)) > 10)"
+ ],
+ "FSharpLexer": [
+  "analyse_text (FSharpLexer: statement result = 0)"
+ ],
+ "FStarLexer": [],
+ "FactorLexer": [],
+ "FancyLexer": [],
+ "FantomLexer": [],
+ "FelixLexer": [],
+ "FennelLexer": [],
+ "FiftLexer": [],
+ "FishShellLexer": [],
+ "FlatlineLexer": [],
+ "FloScriptLexer": [],
+ "ForthLexer": [],
+ "FortranFixedLexer": [
+  "callback fortran::FortranFixedLexer._lex_fortran"
+ ],
+ "FortranLexer": [],
+ "FoxProLexer": [],
+ "FreeFemLexer": [
+  "get_tokens_unprocessed override in FreeFemLexer"
+ ],
+ "FuncLexer": [],
+ "FutharkLexer": [],
+ "GAPConsoleLexer": [
+  "custom lexer (GAPConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "GAPLexer": [
+  "analyse_text (GAPLexer: statement score = 0.0)"
+ ],
+ "GDScriptLexer": [
+  "analyse_text (GDScriptLexer: statement score = 0.0)"
+ ],
+ "GLShaderLexer": [],
+ "GSQLLexer": [],
+ "GasLexer": [
+  "analyse_text (GasLexer: statement if re.search('^\\\\.(text|data|section)', text, re.M):)"
+ ],
+ "GcodeLexer": [],
+ "GenshiLexer": [
+  "analyse_text (GenshiLexer: statement rv = 0.0)"
+ ],
+ "GenshiTextLexer": [],
+ "GettextLexer": [],
+ "GherkinLexer": [],
+ "GleamLexer": [],
+ "GnuplotLexer": [],
+ "GoLexer": [],
+ "GoloLexer": [],
+ "GoodDataCLLexer": [],
+ "GoogleSqlLexer": [
+  "analyse_text (GoogleSqlLexer: statement tokens = collections.Counter(text.split()))"
+ ],
+ "GosuLexer": [],
+ "GosuTemplateLexer": [
+  "custom lexer (GosuTemplateLexer.get_tokens_unprocessed)"
+ ],
+ "GraphQLLexer": [],
+ "GraphvizLexer": [],
+ "GroffLexer": [
+  "analyse_text (GroffLexer: condition text[:1] != '.')"
+ ],
+ "GroovyLexer": [],
+ "HLSLShaderLexer": [],
+ "HTMLUL4Lexer": [],
+ "HamlLexer": [
+  "callback css::_indentation",
+  "callback css::_starts_block.<locals>.callback"
+ ],
+ "HandlebarsHtmlLexer": [],
+ "HandlebarsLexer": [],
+ "HareLexer": [],
+ "HaskellLexer": [],
+ "HaxeLexer": [
+  "callback haxe::HaxeLexer.preproc_callback"
+ ],
+ "HexdumpLexer": [],
+ "HsailLexer": [],
+ "HspecLexer": [],
+ "HtmlDjangoLexer": [
+  "analyse_text (HtmlDjangoLexer: statement rv = DjangoLexer.analyse_text(text) - 0.01)"
+ ],
+ "HtmlGenshiLexer": [
+  "analyse_text (HtmlGenshiLexer: statement rv = 0.0)"
+ ],
+ "HtmlLexer": [],
+ "HtmlPhpLexer": [
+  "analyse_text (HtmlPhpLexer: statement rv = PhpLexer.analyse_text(text) - 0.01)"
+ ],
+ "HtmlSmartyLexer": [
+  "analyse_text (HtmlSmartyLexer: statement rv = SmartyLexer.analyse_text(text) - 0.01)"
+ ],
+ "HttpLexer": [
+  "get_tokens_unprocessed override in HttpLexer",
+  "callback textfmts::HttpLexer.content_callback",
+  "callback textfmts::HttpLexer.continuous_header_callback",
+  "callback textfmts::HttpLexer.header_callback",
+  "analyse_text (HttpLexer: condition any((re.search(pattern, text) is not None for pattern in ('^([a-zA-Z][-_a-zA-Z]+)( +)([^ ]+)( +)(HTTP)(/)(1\\\\.[01]|2(?:\\\\.0)?|3)(\\\\r?\\\\n|\\\\Z)', '^(HTTP)(/)(1\\\\.[01]|2(?:\\\\.0)?|3)( +)(\\\\d{3})(?:( +)([^\\\\r\\\\n]*))?(\\\\r?\\\\n|\\\\Z)'))))"
+ ],
+ "HxmlLexer": [],
+ "HyLexer": [],
+ "HybrisLexer": [
+  "analyse_text (HybrisLexer: statement result = 0)"
+ ],
+ "IDLLexer": [
+  "analyse_text (IDLLexer: statement result = 0)"
+ ],
+ "IconLexer": [],
+ "IdrisLexer": [],
+ "IgorLexer": [],
+ "Inform6Lexer": [
+  "get_tokens_unprocessed override in Inform6Lexer",
+  "analyse_text (Inform6Lexer: statement result = 0)"
+ ],
+ "Inform6TemplateLexer": [],
+ "Inform7Lexer": [],
+ "IniLexer": [
+  "analyse_text (IniLexer: statement npos = text.find('\\n'))"
+ ],
+ "IoLexer": [],
+ "IokeLexer": [],
+ "IrcLogsLexer": [],
+ "IsabelleLexer": [],
+ "JLexer": [],
+ "JMESPathLexer": [],
+ "JSLTLexer": [],
+ "JagsLexer": [
+  "analyse_text (JagsLexer: statement if re.search('^\\\\s*model\\\\s*\\\\{', text, re.M):)"
+ ],
+ "JanetLexer": [],
+ "JasminLexer": [
+  "analyse_text (JasminLexer: statement score = 0)"
+ ],
+ "JavaLexer": [],
+ "JavascriptDjangoLexer": [
+  "analyse_text (JavascriptDjangoLexer: condition DjangoLexer.analyse_text(text) - 0.05)"
+ ],
+ "JavascriptErbLexer": [
+  "analyse_text (JavascriptErbLexer: condition ErbLexer.analyse_text(text) - 0.05)"
+ ],
+ "JavascriptGenshiLexer": [
+  "analyse_text (JavascriptGenshiLexer: condition GenshiLexer.analyse_text(text) - 0.05)"
+ ],
+ "JavascriptLexer": [],
+ "JavascriptPhpLexer": [
+  "analyse_text (JavascriptPhpLexer: condition PhpLexer.analyse_text(text))"
+ ],
+ "JavascriptSmartyLexer": [
+  "analyse_text (JavascriptSmartyLexer: condition SmartyLexer.analyse_text(text) - 0.05)"
+ ],
+ "JavascriptUL4Lexer": [],
+ "JclLexer": [
+  "analyse_text (JclLexer: statement result = 0.0)"
+ ],
+ "JsgfLexer": [],
+ "Json5Lexer": [],
+ "JsonBareObjectLexer": [
+  "custom lexer (JsonLexer.get_tokens_unprocessed)"
+ ],
+ "JsonLdLexer": [
+  "custom lexer (JsonLdLexer.get_tokens_unprocessed)"
+ ],
+ "JsonLexer": [
+  "custom lexer (JsonLexer.get_tokens_unprocessed)"
+ ],
+ "JsonnetLexer": [],
+ "JspLexer": [
+  "analyse_text (JspLexer: statement rv = JavaLexer.analyse_text(text) - 0.01)"
+ ],
+ "JsxLexer": [],
+ "JuliaConsoleLexer": [
+  "custom lexer (JuliaConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "JuliaLexer": [],
+ "JuttleLexer": [],
+ "KLexer": [],
+ "KalLexer": [],
+ "KconfigLexer": [],
+ "KernelLogLexer": [],
+ "KokaLexer": [],
+ "KotlinLexer": [],
+ "KuinLexer": [],
+ "KustoLexer": [],
+ "LSLLexer": [],
+ "LassoCssLexer": [
+  "analyse_text (LassoCssLexer: statement rv = LassoLexer.analyse_text(text) - 0.05)"
+ ],
+ "LassoHtmlLexer": [
+  "analyse_text (LassoHtmlLexer: statement rv = LassoLexer.analyse_text(text) - 0.01)"
+ ],
+ "LassoJavascriptLexer": [
+  "analyse_text (LassoJavascriptLexer: statement rv = LassoLexer.analyse_text(text) - 0.05)"
+ ],
+ "LassoLexer": [
+  "get_tokens_unprocessed override in LassoLexer",
+  "analyse_text (LassoLexer: statement rv = 0.0)"
+ ],
+ "LassoXmlLexer": [
+  "analyse_text (LassoXmlLexer: statement rv = LassoLexer.analyse_text(text) - 0.01)"
+ ],
+ "LdaprcLexer": [],
+ "LdifLexer": [],
+ "Lean3Lexer": [],
+ "Lean4Lexer": [],
+ "LessCssLexer": [],
+ "LighttpdConfLexer": [],
+ "LilyPondLexer": [
+  "get_tokens_unprocessed override in LilyPondLexer",
+  "callback lisp::SchemeLexer.decimal_cb"
+ ],
+ "LimboLexer": [],
+ "LiquidLexer": [],
+ "LiterateAgdaLexer": [
+  "custom lexer (LiterateLexer.get_tokens_unprocessed)"
+ ],
+ "LiterateCryptolLexer": [
+  "custom lexer (LiterateLexer.get_tokens_unprocessed)"
+ ],
+ "LiterateHaskellLexer": [
+  "custom lexer (LiterateLexer.get_tokens_unprocessed)"
+ ],
+ "LiterateIdrisLexer": [
+  "custom lexer (LiterateLexer.get_tokens_unprocessed)"
+ ],
+ "LiveScriptLexer": [],
+ "LlvmLexer": [],
+ "LlvmMirBodyLexer": [],
+ "LlvmMirLexer": [],
+ "LogosLexer": [
+  "get_tokens_unprocessed override in GeneratedObjectiveCVariant"
+ ],
+ "LogtalkLexer": [
+  "analyse_text (LogtalkLexer: statement if ':- object(' in text:)"
+ ],
+ "LuaLexer": [
+  "get_tokens_unprocessed override in LuaLexer"
+ ],
+ "LuauLexer": [
+  "get_tokens_unprocessed override in LuauLexer"
+ ],
+ "MCFunctionLexer": [],
+ "MCSchemaLexer": [],
+ "MIMELexer": [
+  "callback mime::MIMELexer.get_body_tokens",
+  "callback mime::MIMELexer.get_content_type_subtokens",
+  "callback mime::MIMELexer.get_header_tokens",
+  "callback mime::MIMELexer.store_content_transfer_encoding",
+  "callback mime::MIMELexer.store_content_type"
+ ],
+ "MIPSLexer": [],
+ "MOOCodeLexer": [],
+ "MSDOSSessionLexer": [
+  "custom lexer (ShellSessionBaseLexer.get_tokens_unprocessed)"
+ ],
+ "Macaulay2Lexer": [],
+ "MakefileLexer": [
+  "custom lexer (MakefileLexer.get_tokens_unprocessed)"
+ ],
+ "MakoCssLexer": [],
+ "MakoHtmlLexer": [],
+ "MakoJavascriptLexer": [],
+ "MakoLexer": [],
+ "MakoXmlLexer": [],
+ "MapleLexer": [
+  "callback maple::MapleLexer.delayed_callback"
+ ],
+ "MaqlLexer": [],
+ "MarkdownLexer": [
+  "callback markup::MarkdownLexer._handle_codeblock"
+ ],
+ "MaskLexer": [],
+ "MasonLexer": [
+  "analyse_text (MasonLexer: statement result = 0.0)"
+ ],
+ "MathematicaLexer": [],
+ "MatlabLexer": [
+  "analyse_text (MatlabLexer: statement first_non_comment = next((line for line in text.splitlines() if not re.match('^\\\\s*%', text)), '').strip())"
+ ],
+ "MatlabSessionLexer": [
+  "custom lexer (MatlabSessionLexer.get_tokens_unprocessed)"
+ ],
+ "MaximaLexer": [
+  "analyse_text (MaximaLexer: statement strength = 0.0)"
+ ],
+ "MesonLexer": [],
+ "MiniDLexer": [],
+ "MiniScriptLexer": [],
+ "ModelicaLexer": [],
+ "Modula2Lexer": [
+  "get_tokens_unprocessed override in Modula2Lexer",
+  "analyse_text (Modula2Lexer: statement result = 0)"
+ ],
+ "MoinWikiLexer": [],
+ "MojoLexer": [
+  "analyse_text (MojoLexer: in-test on non-text)"
+ ],
+ "MonkeyLexer": [],
+ "MonteLexer": [],
+ "MoonScriptLexer": [
+  "get_tokens_unprocessed override in MoonScriptLexer"
+ ],
+ "MoselLexer": [],
+ "MozPreprocCssLexer": [],
+ "MozPreprocHashLexer": [],
+ "MozPreprocJavascriptLexer": [],
+ "MozPreprocPercentLexer": [],
+ "MozPreprocXulLexer": [],
+ "MqlLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "MscgenLexer": [],
+ "MuPADLexer": [],
+ "MxmlLexer": [],
+ "MySqlLexer": [
+  "analyse_text (MySqlLexer: statement rating = 0)"
+ ],
+ "MyghtyCssLexer": [],
+ "MyghtyHtmlLexer": [],
+ "MyghtyJavascriptLexer": [],
+ "MyghtyLexer": [],
+ "MyghtyXmlLexer": [],
+ "NCLLexer": [],
+ "NSISLexer": [],
+ "NasmLexer": [],
+ "NasmObjdumpLexer": [],
+ "NemerleLexer": [
+  "analyse_text (NemerleLexer: statement result = 0)"
+ ],
+ "NesCLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "NestedTextLexer": [],
+ "NewLispLexer": [],
+ "NewspeakLexer": [],
+ "NginxConfLexer": [],
+ "NimrodLexer": [],
+ "NitLexer": [],
+ "NixLexer": [
+  "analyse_text (NixLexer: statement rv = 0.0)"
+ ],
+ "NodeConsoleLexer": [
+  "custom lexer (NodeConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "NotmuchLexer": [
+  "callback textfmts::NotmuchLexer._highlight_code",
+  "analyse_text (NotmuchLexer: condition 1.0 if text.startswith('\\x0cmessage{') else 0.0)"
+ ],
+ "NuSMVLexer": [],
+ "NumPyLexer": [
+  "get_tokens_unprocessed override in NumPyLexer",
+  "analyse_text (NumPyLexer: statement ltext = text[:1000])"
+ ],
+ "NumbaIRLexer": [],
+ "ObjdumpLexer": [],
+ "ObjectiveCLexer": [
+  "get_tokens_unprocessed override in GeneratedObjectiveCVariant",
+  "analyse_text (GeneratedObjectiveCVariant: statement if _oc_keywords.search(text):)"
+ ],
+ "ObjectiveCppLexer": [
+  "get_tokens_unprocessed override in GeneratedObjectiveCVariant",
+  "analyse_text (GeneratedObjectiveCVariant: statement if _oc_keywords.search(text):)"
+ ],
+ "ObjectiveJLexer": [],
+ "OcamlLexer": [],
+ "OctaveLexer": [],
+ "OdinLexer": [],
+ "OmgIdlLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "OocLexer": [],
+ "OpaLexer": [],
+ "OpenEdgeLexer": [
+  "analyse_text (OpenEdgeLexer: statement result = 0)"
+ ],
+ "OpenScadLexer": [],
+ "OrgLexer": [],
+ "OutputLexer": [
+  "custom lexer (OutputLexer.get_tokens_unprocessed)"
+ ],
+ "PacmanConfLexer": [],
+ "PanLexer": [],
+ "ParaSailLexer": [],
+ "PawnLexer": [],
+ "PddlLexer": [],
+ "PegLexer": [],
+ "Perl6Lexer": [
+  "callback perl::Perl6Lexer.brackets_callback.<locals>.callback",
+  "callback perl::Perl6Lexer.closing_brace_callback",
+  "callback perl::Perl6Lexer.embedded_perl6_callback",
+  "callback perl::Perl6Lexer.opening_brace_callback",
+  "analyse_text (Perl6Lexer: statement def strip_pod(lines):)"
+ ],
+ "PerlLexer": [
+  "analyse_text (PerlLexer: statement result = 0)"
+ ],
+ "PhixLexer": [],
+ "PhpLexer": [
+  "get_tokens_unprocessed override in PhpLexer",
+  "analyse_text (PhpLexer: statement rv = 0.0)"
+ ],
+ "PigLexer": [],
+ "PikeLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "PkgConfigLexer": [],
+ "PlPgsqlLexer": [
+  "get_tokens_unprocessed override in PostgresBase",
+  "callback sql::language_callback"
+ ],
+ "PointlessLexer": [],
+ "PonyLexer": [],
+ "PortugolLexer": [
+  "custom lexer (PortugolLexer.get_tokens_unprocessed)"
+ ],
+ "PostScriptLexer": [],
+ "PostgresConsoleLexer": [
+  "custom lexer (PostgresConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "PostgresExplainLexer": [],
+ "PostgresLexer": [
+  "get_tokens_unprocessed override in PostgresBase",
+  "callback sql::language_callback"
+ ],
+ "PovrayLexer": [
+  "analyse_text (PovrayLexer: statement result = 0)"
+ ],
+ "PowerShellLexer": [],
+ "PowerShellSessionLexer": [
+  "custom lexer (ShellSessionBaseLexer.get_tokens_unprocessed)"
+ ],
+ "PraatLexer": [],
+ "ProcfileLexer": [],
+ "PrologLexer": [],
+ "PromQLLexer": [],
+ "PromelaLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer"
+ ],
+ "PropertiesLexer": [],
+ "ProtoBufLexer": [],
+ "PrqlLexer": [],
+ "PsqlRegexLexer": [
+  "get_tokens_unprocessed override in PostgresBase",
+  "callback sql::language_callback"
+ ],
+ "PsyshConsoleLexer": [
+  "custom lexer (PsyshConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "PtxLexer": [],
+ "PugLexer": [
+  "callback css::_indentation",
+  "callback css::_starts_block.<locals>.callback"
+ ],
+ "PuppetLexer": [],
+ "PyPyLogLexer": [],
+ "Python2Lexer": [],
+ "Python2TracebackLexer": [],
+ "PythonConsoleLexer": [],
+ "PythonLexer": [
+  "analyse_text (PythonLexer: in-test on non-text)"
+ ],
+ "PythonTracebackLexer": [],
+ "PythonUL4Lexer": [],
+ "QBasicLexer": [],
+ "QLexer": [],
+ "QVToLexer": [],
+ "QlikLexer": [],
+ "QmlLexer": [],
+ "RConsoleLexer": [
+  "custom lexer (RConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "RNCCompactLexer": [],
+ "RPMSpecLexer": [],
+ "RacketLexer": [],
+ "RagelCLexer": [],
+ "RagelCppLexer": [],
+ "RagelDLexer": [],
+ "RagelEmbeddedLexer": [],
+ "RagelJavaLexer": [],
+ "RagelLexer": [],
+ "RagelObjectiveCLexer": [],
+ "RagelRubyLexer": [],
+ "RawTokenLexer": [
+  "custom lexer (RawTokenLexer.get_tokens_unprocessed)"
+ ],
+ "RdLexer": [],
+ "ReasonLexer": [],
+ "RebolLexer": [
+  "callback rebol::RebolLexer.word_callback",
+  "analyse_text (RebolLexer: statement if re.match('^\\\\s*REBOL\\\\s*\\\\[', text, re.IGNORECASE):)"
+ ],
+ "RedLexer": [
+  "callback rebol::RedLexer.word_callback"
+ ],
+ "RedcodeLexer": [],
+ "RegeditLexer": [],
+ "RegoLexer": [],
+ "ResourceLexer": [],
+ "RexxLexer": [
+  "analyse_text (RexxLexer: statement if re.search('/\\\\*\\\\**\\\\s*rexx', text, re.IGNORECASE):)"
+ ],
+ "RhtmlLexer": [
+  "analyse_text (RhtmlLexer: statement rv = ErbLexer.analyse_text(text) - 0.01)"
+ ],
+ "RideLexer": [],
+ "RitaLexer": [],
+ "RoboconfGraphLexer": [],
+ "RoboconfInstancesLexer": [],
+ "RobotFrameworkLexer": [
+  "custom lexer (RobotFrameworkLexer.get_tokens_unprocessed)"
+ ],
+ "RqlLexer": [],
+ "RslLexer": [
+  "analyse_text (RslLexer: condition re.search('scheme\\\\s*.*?=\\\\s*class\\\\s*type', text, re.I) is not None)"
+ ],
+ "RstLexer": [
+  "callback markup::RstLexer._handle_sourcecode",
+  "analyse_text (RstLexer: condition text[:2] == '..')"
+ ],
+ "RtsLexer": [],
+ "RubyConsoleLexer": [
+  "custom lexer (RubyConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "RubyLexer": [
+  "callback ruby::RubyLexer.gen_rubystrings_rules.<locals>.intp_regex_callback",
+  "callback ruby::RubyLexer.gen_rubystrings_rules.<locals>.intp_string_callback",
+  "callback ruby::RubyLexer.heredoc_callback"
+ ],
+ "RustLexer": [],
+ "SASLexer": [],
+ "SLexer": [],
+ "SMLLexer": [
+  "callback ml::SMLLexer.end_id_callback",
+  "callback ml::SMLLexer.id_callback",
+  "callback ml::SMLLexer.long_id_callback"
+ ],
+ "SNBTLexer": [],
+ "SarlLexer": [],
+ "SassLexer": [
+  "callback css::_indentation",
+  "callback css::_starts_block.<locals>.callback"
+ ],
+ "SaviLexer": [],
+ "ScalaLexer": [],
+ "ScamlLexer": [
+  "callback css::_indentation",
+  "callback css::_starts_block.<locals>.callback"
+ ],
+ "ScdocLexer": [
+  "analyse_text (ScdocLexer: statement result = 0)"
+ ],
+ "SchemeLexer": [
+  "get_tokens_unprocessed override in SchemeLexer",
+  "callback lisp::SchemeLexer.decimal_cb"
+ ],
+ "ScilabLexer": [
+  "analyse_text (ScilabLexer: statement score = 0.0)"
+ ],
+ "ScssLexer": [],
+ "SedLexer": [],
+ "ShExCLexer": [],
+ "ShenLexer": [
+  "get_tokens_unprocessed override in ShenLexer"
+ ],
+ "SieveLexer": [],
+ "SilverLexer": [],
+ "SingularityLexer": [
+  "analyse_text (SingularityLexer: statement result = 0)"
+ ],
+ "SlashLexer": [],
+ "SlimLexer": [
+  "callback css::_indentation",
+  "callback css::_starts_block.<locals>.callback"
+ ],
+ "SlurmBashLexer": [
+  "get_tokens_unprocessed override in SlurmBashLexer"
+ ],
+ "SmaliLexer": [
+  "analyse_text (SmaliLexer: statement score = 0)"
+ ],
+ "SmalltalkLexer": [],
+ "SmartGameFormatLexer": [],
+ "SmartyLexer": [
+  "analyse_text (SmartyLexer: statement rv = 0.0)"
+ ],
+ "SmithyLexer": [],
+ "SnobolLexer": [],
+ "SnowballLexer": [
+  "get_tokens_unprocessed override in SnowballLexer",
+  "callback dsls::SnowballLexer._string.<locals>.callback",
+  "callback dsls::SnowballLexer._stringescapes"
+ ],
+ "SolidityLexer": [],
+ "SoongLexer": [],
+ "SophiaLexer": [],
+ "SourcePawnLexer": [
+  "get_tokens_unprocessed override in SourcePawnLexer"
+ ],
+ "SourcesListLexer": [
+  "analyse_text (SourcesListLexer: statement for line in text.splitlines():)"
+ ],
+ "SparqlLexer": [],
+ "SpiceLexer": [],
+ "SqlJinjaLexer": [
+  "analyse_text (SqlJinjaLexer: statement rv = 0.0)"
+ ],
+ "SqlLexer": [],
+ "SqliteConsoleLexer": [
+  "custom lexer (SqliteConsoleLexer.get_tokens_unprocessed)"
+ ],
+ "SquidConfLexer": [],
+ "SrcinfoLexer": [],
+ "SspLexer": [
+  "analyse_text (SspLexer: statement rv = 0.0)"
+ ],
+ "StanLexer": [],
+ "StataLexer": [],
+ "SuperColliderLexer": [],
+ "SwiftLexer": [
+  "get_tokens_unprocessed override in SwiftLexer"
+ ],
+ "SwigLexer": [
+  "get_tokens_unprocessed override in CFamilyLexer",
+  "analyse_text (SwigLexer: statement rv = 0)"
+ ],
+ "SystemVerilogLexer": [],
+ "SystemdLexer": [
+  "analyse_text (SystemdLexer: condition re.search('^\\\\[Unit\\\\][ \\\\t]*$', text[:500], re.MULTILINE) is not None)"
+ ],
+ "TAPLexer": [],
+ "TNTLexer": [
+  "custom lexer (TNTLexer.get_tokens_unprocessed)"
+ ],
+ "TOMLLexer": [],
+ "TableGenLexer": [],
+ "TactLexer": [],
+ "Tads3Lexer": [
+  "get_tokens_unprocessed override in Tads3Lexer",
+  "analyse_text (Tads3Lexer: statement result = 0)"
+ ],
+ "TalLexer": [
+  "analyse_text (TalLexer: in-test on non-text)"
+ ],
+ "TasmLexer": [],
+ "TclLexer": [],
+ "TcshLexer": [],
+ "TcshSessionLexer": [
+  "custom lexer (ShellSessionBaseLexer.get_tokens_unprocessed)"
+ ],
+ "TeaTemplateLexer": [
+  "analyse_text (TeaTemplateLexer: statement rv = TeaLangLexer.analyse_text(text) - 0.01)"
+ ],
+ "TealLexer": [],
+ "TeraTermLexer": [],
+ "TermcapLexer": [],
+ "TerminfoLexer": [],
+ "TerraformLexer": [
+  "callback configs::TerraformLexer.heredoc_callback"
+ ],
+ "TexLexer": [
+  "analyse_text (TexLexer: statement for start in ('\\\\documentclass', '\\\\input', '\\\\documentstyle', '\\\\relax'):)"
+ ],
+ "TextLexer": [
+  "custom lexer (TextLexer.get_tokens_unprocessed)"
+ ],
+ "ThingsDBLexer": [],
+ "ThriftLexer": [],
+ "TiddlyWiki5Lexer": [
+  "callback markup::TiddlyWiki5Lexer._handle_codeblock",
+  "callback markup::TiddlyWiki5Lexer._handle_cssblock"
+ ],
+ "TlbLexer": [],
+ "TlsLexer": [],
+ "TodotxtLexer": [],
+ "TransactSqlLexer": [
+  "analyse_text (TransactSqlLexer: statement rating = 0)"
+ ],
+ "TreetopLexer": [],
+ "TsxLexer": [],
+ "TurtleLexer": [
+  "analyse_text (TurtleLexer: statement for t in ('@base ', 'BASE ', '@prefix ', 'PREFIX '):)"
+ ],
+ "TwigHtmlLexer": [],
+ "TwigLexer": [],
+ "TypeScriptLexer": [],
+ "TypoScriptCssDataLexer": [],
+ "TypoScriptHtmlDataLexer": [],
+ "TypoScriptLexer": [],
+ "TypstLexer": [
+  "get_tokens_unprocessed override in TypstLexer"
+ ],
+ "UL4Lexer": [],
+ "UcodeLexer": [
+  "analyse_text (UcodeLexer: statement result = 0)"
+ ],
+ "UniconLexer": [],
+ "UnixConfigLexer": [],
+ "UrbiscriptLexer": [
+  "callback urbi::UrbiscriptLexer.blob_callback",
+  "analyse_text (UrbiscriptLexer: statement result = 0)"
+ ],
+ "UrlEncodedLexer": [],
+ "UsdLexer": [],
+ "VBScriptLexer": [],
+ "VCLLexer": [
+  "analyse_text (VCLLexer: statement if text.startswith('vcl 4.0;'):)"
+ ],
+ "VCLSnippetLexer": [],
+ "VCTreeStatusLexer": [],
+ "VGLLexer": [],
+ "ValaLexer": [],
+ "VbNetAspxLexer": [
+  "analyse_text (VbNetAspxLexer: statement if re.search('Page\\\\s*Language=\"Vb\"', text, re.I) is not None:)"
+ ],
+ "VbNetLexer": [],
+ "VelocityHtmlLexer": [],
+ "VelocityLexer": [
+  "analyse_text (VelocityLexer: statement rv = 0.0)"
+ ],
+ "VelocityXmlLexer": [
+  "analyse_text (VelocityXmlLexer: statement rv = VelocityLexer.analyse_text(text) - 0.01)"
+ ],
+ "VerifpalLexer": [],
+ "VerilogLexer": [
+  "analyse_text (VerilogLexer: statement result = 0)"
+ ],
+ "VhdlLexer": [],
+ "VimLexer": [
+  "get_tokens_unprocessed override in VimLexer"
+ ],
+ "VisualPrologGrammarLexer": [],
+ "VisualPrologLexer": [],
+ "VueLexer": [],
+ "VyperLexer": [],
+ "WDiffLexer": [],
+ "WatLexer": [],
+ "WebIDLLexer": [],
+ "WgslLexer": [],
+ "WhileyLexer": [],
+ "WikitextLexer": [
+  "callback markup::WikitextLexer.handle_score",
+  "callback markup::WikitextLexer.handle_syntaxhighlight"
+ ],
+ "WoWTocLexer": [
+  "analyse_text (WoWTocLexer: statement result = 0)"
+ ],
+ "WrenLexer": [],
+ "X10Lexer": [],
+ "XMLUL4Lexer": [],
+ "XQueryLexer": [
+  "callback webmisc::XQueryLexer.operator_root_callback",
+  "callback webmisc::XQueryLexer.popstate_callback",
+  "callback webmisc::XQueryLexer.popstate_kindtest_callback",
+  "callback webmisc::XQueryLexer.popstate_tag_callback",
+  "callback webmisc::XQueryLexer.popstate_xmlcomment_callback",
+  "callback webmisc::XQueryLexer.punctuation_root_callback",
+  "callback webmisc::XQueryLexer.pushstate_element_content_cdata_section_callback",
+  "callback webmisc::XQueryLexer.pushstate_element_content_processing_instruction_callback",
+  "callback webmisc::XQueryLexer.pushstate_element_content_starttag_callback",
+  "callback webmisc::XQueryLexer.pushstate_element_content_xmlcomment_callback",
+  "callback webmisc::XQueryLexer.pushstate_kindtest_callback",
+  "callback webmisc::XQueryLexer.pushstate_occurrenceindicator_kindtest_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_cdata_section_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_kindtest_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_kindtestforpi_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_map_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_order_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_processing_instruction_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_root_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_root_construct_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_root_validate",
+  "callback webmisc::XQueryLexer.pushstate_operator_root_validate_withmode",
+  "callback webmisc::XQueryLexer.pushstate_operator_starttag_callback",
+  "callback webmisc::XQueryLexer.pushstate_operator_xmlcomment_callback",
+  "callback webmisc::XQueryLexer.pushstate_root_callback"
+ ],
+ "XmlDjangoLexer": [
+  "analyse_text (XmlDjangoLexer: statement rv = DjangoLexer.analyse_text(text) - 0.01)"
+ ],
+ "XmlErbLexer": [
+  "analyse_text (XmlErbLexer: statement rv = ErbLexer.analyse_text(text) - 0.01)"
+ ],
+ "XmlLexer": [],
+ "XmlPhpLexer": [
+  "analyse_text (XmlPhpLexer: statement rv = PhpLexer.analyse_text(text) - 0.01)"
+ ],
+ "XmlSmartyLexer": [
+  "analyse_text (XmlSmartyLexer: statement rv = SmartyLexer.analyse_text(text) - 0.01)"
+ ],
+ "XorgLexer": [],
+ "XppLexer": [],
+ "XsltLexer": [
+  "get_tokens_unprocessed override in XsltLexer"
+ ],
+ "XtendLexer": [],
+ "XtlangLexer": [],
+ "YamlJinjaLexer": [],
+ "YamlLexer": [
+  "get_tokens_unprocessed override in YamlLexer",
+  "callback data::YamlLexer.parse_block_scalar_empty_line.<locals>.callback",
+  "callback data::YamlLexer.parse_block_scalar_indent.<locals>.callback",
+  "callback data::YamlLexer.parse_plain_scalar_indent.<locals>.callback",
+  "callback data::YamlLexer.reset_indent.<locals>.callback",
+  "callback data::YamlLexer.save_indent.<locals>.callback",
+  "callback data::YamlLexer.set_block_scalar_indent.<locals>.callback",
+  "callback data::YamlLexer.set_indent.<locals>.callback",
+  "callback data::YamlLexer.something.<locals>.callback"
+ ],
+ "YangLexer": [],
+ "YaraLexer": [],
+ "ZeekLexer": [],
+ "ZephirLexer": [],
+ "ZigLexer": [],
+ "apdlexer": []
+}

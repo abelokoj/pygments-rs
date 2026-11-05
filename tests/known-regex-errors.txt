@@ -1,0 +1,2 @@
+# Lexer classes with at least one pattern Oniguruma rejects (Python-only regex
+# syntax). Such rules never match; see target/catalog-report.txt in CI.

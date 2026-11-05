@@ -1,0 +1,1 @@
+{"class":"AntlrPerlLexer","name":"ANTLR With Perl Target","module":"parsers","aliases":["antlr-perl"],"filenames":[["*.G","(?s:.*\\.G)\\Z"],["*.g","(?s:.*\\.g)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://www.antlr.org","kind":"delegating","root":"PerlLexer","language":"AntlrLexer","needle":"Token.Other","analyse_custom":"AntlrPerlLexer"}

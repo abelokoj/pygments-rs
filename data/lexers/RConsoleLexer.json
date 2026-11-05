@@ -1,0 +1,1 @@
+{"class":"RConsoleLexer","name":"RConsole","module":"r","aliases":["rconsole","rout"],"filenames":[["*.Rout","(?s:.*\\.Rout)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://www.r-project.org","kind":"custom","override":"RConsoleLexer","consts":{"line_re":{"regex":".*?\n","flags":""},"options":{}}}

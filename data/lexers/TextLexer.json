@@ -1,0 +1,1 @@
+{"class":"TextLexer","name":"Text only","module":"special","aliases":["text"],"filenames":[["*.txt","(?s:.*\\.txt)\\Z"]],"alias_filenames":[],"mimetypes":["text/plain"],"priority":0.01,"url":"","kind":"custom","override":"TextLexer"}

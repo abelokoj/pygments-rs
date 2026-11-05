@@ -1,0 +1,1 @@
+{"class":"MozPreprocXulLexer","name":"XUL+mozpreproc","module":"markup","aliases":["xul+mozpreproc"],"filenames":[["*.xul.in","(?s:.*\\.xul\\.in)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://firefox-source-docs.mozilla.org/build/buildsystem/preprocessor.html","kind":"delegating","root":"XmlLexer","language":"MozPreprocHashLexer","needle":"Token.Other"}

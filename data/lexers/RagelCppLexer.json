@@ -1,0 +1,1 @@
+{"class":"RagelCppLexer","name":"Ragel in CPP Host","module":"parsers","aliases":["ragel-cpp"],"filenames":[["*.rl","(?s:.*\\.rl)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"http://www.colm.net/open-source/ragel/","kind":"delegating","root":"CppLexer","language":"RagelEmbeddedLexer","needle":"Token.Other"}

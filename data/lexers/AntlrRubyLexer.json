@@ -1,0 +1,1 @@
+{"class":"AntlrRubyLexer","name":"ANTLR With Ruby Target","module":"parsers","aliases":["antlr-ruby","antlr-rb"],"filenames":[["*.G","(?s:.*\\.G)\\Z"],["*.g","(?s:.*\\.g)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://www.antlr.org","kind":"delegating","root":"RubyLexer","language":"AntlrLexer","needle":"Token.Other","analyse_custom":"AntlrRubyLexer"}

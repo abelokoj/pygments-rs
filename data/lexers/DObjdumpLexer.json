@@ -1,0 +1,1 @@
+{"class":"DObjdumpLexer","name":"d-objdump","module":"asm","aliases":["d-objdump"],"filenames":[["*.d-objdump","(?s:.*\\.d\\-objdump)\\Z"]],"alias_filenames":[],"mimetypes":["text/x-d-objdump"],"priority":0.0,"url":"https://www.gnu.org/software/binutils","kind":"delegating","root":"DLexer","language":"ObjdumpLexer","needle":"Token.Other"}

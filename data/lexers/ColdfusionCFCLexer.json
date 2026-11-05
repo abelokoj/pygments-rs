@@ -1,0 +1,1 @@
+{"class":"ColdfusionCFCLexer","name":"Coldfusion CFC","module":"templates","aliases":["cfc"],"filenames":[["*.cfc","(?s:.*\\.cfc)\\Z"]],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://www.adobe.com/products/coldfusion-family.html","kind":"delegating","root":"ColdfusionHtmlLexer","language":"ColdfusionLexer","needle":"Token.Other"}

@@ -1,0 +1,1 @@
+{"class":"JuliaConsoleLexer","name":"Julia console","module":"julia","aliases":["jlcon","julia-repl"],"filenames":[],"alias_filenames":[],"mimetypes":[],"priority":0.0,"url":"https://julialang.org/","kind":"custom","override":"JuliaConsoleLexer","consts":{"options":{}}}

@@ -1,0 +1,1 @@
+{"class":"CssErbLexer","name":"CSS+Ruby","module":"templates","aliases":["css+ruby","css+erb"],"filenames":[],"alias_filenames":[["*.css","(?s:.*\\.css)\\Z"]],"mimetypes":["text/css+ruby"],"priority":0.0,"url":"https://github.com/ruby/erb","kind":"delegating","root":"CssLexer","language":"ErbLexer","needle":"Token.Other","analyse_custom":"CssErbLexer"}
