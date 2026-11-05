@@ -16,7 +16,9 @@ import fnmatch
 import importlib
 import inspect
 import json
+import os
 import re
+import subprocess
 import sys
 import textwrap
 from pathlib import Path
@@ -675,4 +677,10 @@ def write_registry(index):
 
 
 if __name__ == '__main__':
+    # Some Pygments lexers build regex alternations by joining a set, so their
+    # pattern text follows str hashing. Pin the seed for byte-stable output;
+    # -I would ignore PYTHONHASHSEED, so re-exec with -P -s (same safe sys.path).
+    if os.environ.get('PYTHONHASHSEED') != '0':
+        env = dict(os.environ, PYTHONHASHSEED='0')
+        sys.exit(subprocess.call([sys.executable, '-P', '-s', *sys.argv], env=env))
     main()

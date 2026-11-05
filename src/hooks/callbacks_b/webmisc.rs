@@ -11,7 +11,7 @@ use crate::token::TokenType;
 #[derive(Clone, Debug, Default, PartialEq)]
 struct ParseState(Vec<StateId>);
 
-fn saved(cx: &mut Cx<'_>) -> &mut Vec<StateId> {
+fn saved<'a>(cx: &'a mut Cx<'_>) -> &'a mut Vec<StateId> {
     &mut cx.extra.get::<ParseState>().0
 }
 
