@@ -1033,10 +1033,13 @@ fn shen(lx: &'static LexerImpl, text: &str, tok: Tok, extra: &mut Extra, out: &m
 
 #[cfg(test)]
 mod tests {
+    type TokenPair = (&'static str, &'static str);
+    type TestCase = (&'static str, &'static str, &'static [TokenPair]);
+
     /// `(alias, text, expected (type, value) pairs)` from Pygments 2.19.2's
     /// `get_tokens_unprocessed`, with empty tokens left out.
     #[rustfmt::skip]
-    const CASES: &[(&str, &str, &[(&str, &str)])] = &[
+    const CASES: &[TestCase] = &[
         ("c", "size_t n; int8_t m;\n", &[("Keyword.Type", "size_t"), ("Text.Whitespace", " "), ("Name", "n"), ("Punctuation", ";"), ("Text.Whitespace", " "), ("Keyword.Type", "int8_t"), ("Text.Whitespace", " "), ("Name", "m"), ("Punctuation", ";"), ("Text.Whitespace", "\n")]),
         ("cuda", "__global__ void k() { threadIdx; float4 v; }\n", &[("Keyword.Reserved", "__global__"), ("Text.Whitespace", " "), ("Keyword.Type", "void"), ("Text.Whitespace", " "), ("Name", "k"), ("Punctuation", "("), ("Punctuation", ")"), ("Text.Whitespace", " "), ("Punctuation", "{"), ("Text.Whitespace", " "), ("Name.Builtin", "threadIdx"), ("Punctuation", ";"), ("Text.Whitespace", " "), ("Keyword.Type", "float4"), ("Text.Whitespace", " "), ("Name", "v"), ("Punctuation", ";"), ("Text.Whitespace", " "), ("Punctuation", "}"), ("Text.Whitespace", "\n")]),
         ("arduino", "void setup() { pinMode(13, OUTPUT); }\n", &[("Keyword.Reserved", "void"), ("Text.Whitespace", " "), ("Name.Builtin", "setup"), ("Punctuation", "("), ("Punctuation", ")"), ("Text.Whitespace", " "), ("Punctuation", "{"), ("Text.Whitespace", " "), ("Name.Function", "pinMode"), ("Punctuation", "("), ("Literal.Number.Integer", "13"), ("Punctuation", ","), ("Text.Whitespace", " "), ("Keyword.Reserved", "OUTPUT"), ("Punctuation", ")"), ("Punctuation", ";"), ("Text.Whitespace", " "), ("Punctuation", "}"), ("Text.Whitespace", "\n")]),

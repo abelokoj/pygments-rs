@@ -253,9 +253,9 @@ fn run(lx: &'static LexerImpl, portugol: bool, text: &str, out: &mut Vec<Tok>) {
                         block_labels.insert(name.to_owned());
                     } else if block_labels.contains(name) {
                         token = TokenType::NAME_LABEL;
-                    } else if portugol && sets.portugol_builtin_types.contains(name) {
-                        token = TokenType::KEYWORD_TYPE;
-                    } else if !portugol && sets.builtin_types.contains(name) {
+                    } else if (portugol && sets.portugol_builtin_types.contains(name))
+                        || (!portugol && sets.builtin_types.contains(name))
+                    {
                         token = TokenType::KEYWORD_TYPE;
                     } else if !portugol && sets.directives.contains(name) {
                         token = TokenType::KEYWORD_PSEUDO;
@@ -264,10 +264,7 @@ fn run(lx: &'static LexerImpl, portugol: bool, text: &str, out: &mut Vec<Tok>) {
                     } else {
                         token = TokenType::NAME;
                     }
-                } else if portugol && sc.scan(&re.dq) {
-                    token = TokenType::LITERAL_STRING;
-                    stack.push(St::Str);
-                } else if !portugol && sc.scan(&re.sq) {
+                } else if (portugol && sc.scan(&re.dq)) || (!portugol && sc.scan(&re.sq)) {
                     token = TokenType::LITERAL_STRING;
                     stack.push(St::Str);
                 } else if !portugol && sc.scan(&re.chr) {

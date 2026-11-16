@@ -121,11 +121,18 @@ fn every_lexer_loads_and_roundtrips() {
         if !errors.is_empty() && !known_bad.contains(&lexer.class_name()) {
             unexpected.push(format!("{}: {} regex(es) fail to compile", lexer.class_name(), errors.len()));
         }
-        let run = std::panic::catch_unwind(|| lexer.tokenize(sample).map(|(_, s)| s).collect::<String>());
-        match run {
+        // Own thread + timeout, so a lexer that stops advancing is reported instead of hanging CI.
+        let (tx, rx) = std::sync::mpsc::channel();
+        std::thread::spawn(move || {
+            let _ = tx.send(lexer.tokenize(sample).map(|(_, s)| s).collect::<String>());
+        });
+        match rx.recv_timeout(std::time::Duration::from_secs(20)) {
             Ok(joined) if lexer.is_unported() || joined == sample => {}
             Ok(_) => {
                 let _ = writeln!(report, "{}\tdoes not round-trip the sample", lexer.class_name());
+            }
+            Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
+                unexpected.push(format!("{}: lexing did not finish (no progress?)", lexer.class_name()));
             }
             Err(_) => unexpected.push(format!("{}: panicked while lexing", lexer.class_name())),
         }

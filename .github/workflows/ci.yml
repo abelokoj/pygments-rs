@@ -14,21 +14,33 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  CARGO_TERM_COLOR: always
+  CARGO_TERM_COLOR: never
   RUST_BACKTRACE: 1
 
+# Failures are also published as annotations (.github/annotate.py), which the
+# public API serves without sign-in, unlike job logs.
 jobs:
   lint:
     name: fmt + clippy
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
-      - run: cargo fmt --all --check
-      - run: cargo clippy --all-targets -- -D warnings
+      - name: rustfmt
+        shell: bash
+        run: cargo fmt --all --check 2>&1 | tee fmt.log
+      - name: clippy
+        shell: bash
+        run: cargo clippy --all-targets -- -D warnings 2>&1 | tee clippy.log
+      - name: Annotate failures
+        if: failure()
+        run: |
+          python3 .github/annotate.py error rustfmt fmt.log
+          python3 .github/annotate.py error clippy clippy.log
 
   test:
     name: test (${{ matrix.os }})
@@ -37,6 +49,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -47,13 +60,23 @@ jobs:
           version="$(tr -d '[:space:]' < PYGMENTS_VERSION)"
           git clone --quiet --depth 1 --branch "$version" https://github.com/pygments/pygments.git "$RUNNER_TEMP/pygments"
           echo "PYGMENTS_TESTS=$RUNNER_TEMP/pygments/tests" >> "$GITHUB_ENV"
-      - run: cargo test --all-targets
-      - run: cargo test --doc
+      - name: cargo test
+        shell: bash
+        run: cargo test --all-targets 2>&1 | tee test.log
+      - name: doctests
+        shell: bash
+        run: cargo test --doc 2>&1 | tee -a test.log
       - name: Publish reports
         if: always()
         shell: bash
         run: |
           [ -f target/golden-report.md ] && cat target/golden-report.md >> "$GITHUB_STEP_SUMMARY" || true
+          python .github/annotate.py notice golden-report target/golden-report.md
+          python .github/annotate.py notice catalog-report target/catalog-report.txt
+      - name: Annotate failures
+        if: failure()
+        shell: bash
+        run: python .github/annotate.py error tests test.log
       - uses: actions/upload-artifact@v4
         if: always() && matrix.os == 'ubuntu-latest'
         with:
@@ -67,14 +90,21 @@ jobs:
   data:
     name: converted data is up to date
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
       - name: Re-run the converter and compare
+        shell: bash
         run: |
           version="$(tr -d '[:space:]' < PYGMENTS_VERSION)"
           git clone --quiet --depth 1 --branch "$version" https://github.com/pygments/pygments.git "$RUNNER_TEMP/pygments"
           python -I tools/convert.py --pygments "$RUNNER_TEMP/pygments"
           git diff --stat --exit-code -- data src/generated PYGMENTS_VERSION
+      - name: Annotate failures
+        if: failure()
+        run: |
+          git diff -- data src/generated PYGMENTS_VERSION | cut -c1-400 > data.diff
+          python .github/annotate.py error data-diff data.diff

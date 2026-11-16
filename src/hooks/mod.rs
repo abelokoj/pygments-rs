@@ -57,7 +57,7 @@ static MODULES: &[&Module] = &[
 ];
 
 fn find<T: Copy>(key: &str, table: fn(&'static Module) -> &'static [(&'static str, T)]) -> Option<T> {
-    MODULES.iter().flat_map(|m| table(*m).iter()).find(|(k, _)| *k == key).map(|(_, v)| *v)
+    MODULES.iter().copied().flat_map(|m| table(m).iter()).find(|(k, _)| *k == key).map(|(_, v)| *v)
 }
 
 pub(crate) fn callback_for(key: &str) -> Option<CallbackFn> {
@@ -158,6 +158,7 @@ impl Cx<'_> {
     }
 
     /// `#pop` semantics: never pops the last state.
+    #[allow(dead_code)]
     pub(crate) fn pop_state(&mut self) {
         if self.stack.len() > 1 {
             self.stack.pop();

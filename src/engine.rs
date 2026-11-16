@@ -202,6 +202,7 @@ impl RegexLexer {
         }
     }
 
+    #[allow(dead_code)]
     pub(crate) fn root(&self) -> StateId {
         self.root
     }

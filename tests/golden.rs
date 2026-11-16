@@ -161,10 +161,22 @@ fn golden() {
     let mut per_alias: BTreeMap<String, (usize, usize)> = BTreeMap::new();
     let mut passing = Vec::new();
     let mut failures = Vec::new();
+    let mut hangs = Vec::new();
     for case in &cases {
-        let result = std::panic::catch_unwind(|| render(&case.alias, &case.input, case.allow_errors));
-        let ok = match result {
+        // A lexer that stops making progress would stall the whole suite: run
+        // each file on its own thread and move on after a timeout (the thread
+        // leaks until the process exits). A panic shows up as a dropped sender.
+        let (tx, rx) = std::sync::mpsc::channel();
+        let (alias, input, allow) = (case.alias.clone(), case.input.clone(), case.allow_errors);
+        std::thread::spawn(move || {
+            let _ = tx.send(render(&alias, &input, allow));
+        });
+        let ok = match rx.recv_timeout(std::time::Duration::from_secs(30)) {
             Ok(Ok(actual)) => actual == case.expected,
+            Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
+                hangs.push(case.id.clone());
+                false
+            }
             Ok(Err(_)) | Err(_) => false,
         };
         let e = per_alias.entry(case.alias.clone()).or_default();
@@ -188,6 +200,9 @@ fn golden() {
         let _ = writeln!(report, "| {alias} | {p} | {t} | {:.0}% |", 100.0 * *p as f64 / *t as f64);
     }
     let _ = writeln!(report, "\n{full}/{} lexer aliases pass all their files.", per_alias.len());
+    if !hangs.is_empty() {
+        let _ = writeln!(report, "\nTimed out (the lexer stopped making progress):\n\n{}", hangs.join("\n"));
+    }
     let target = Path::new(env!("CARGO_MANIFEST_DIR")).join("target");
     let _ = std::fs::create_dir_all(&target);
     let _ = std::fs::write(target.join("golden-report.md"), &report);

@@ -110,12 +110,14 @@ class Converter:
             return {'push': list(ns)}
         raise ValueError(f'unknown new state {ns!r}')
 
-    def regex(self, pattern, flags, regexes):
+    def regex(self, pattern, flags, regexes, ctx=None):
         p = self.plexer
         if isinstance(pattern, p.Future):
             pattern = pattern.get()
+        if ctx and ctx.get('clsname') in ('SMLLexer', 'WikitextLexer'):
+            pattern = sort_pattern_alternations(pattern)
+        pattern = sanitize_pattern(pattern)
         re.compile(pattern, flags)  # same validation Pygments does
-        pattern = strip_surrogates(pattern)
         key = (pattern, flag_str(flags))
         if key not in regexes:
             regexes[key] = len(regexes)
@@ -133,11 +135,11 @@ class Converter:
             if isinstance(tdef, p._inherit):
                 continue
             if isinstance(tdef, p.default):
-                rule = {'re': self.regex('', ctx['flags'], regexes)}
+                rule = {'re': self.regex('', ctx['flags'], regexes, ctx)}
                 rule.update(self.new_state(tdef.state, unprocessed, processed, regexes, ctx))
                 rules.append(rule)
                 continue
-            rule = {'re': self.regex(tdef[0], ctx['flags'], regexes)}
+            rule = {'re': self.regex(tdef[0], ctx['flags'], regexes, ctx)}
             act = self.action(tdef[1], ctx)
             if act is not None:
                 rule['action'] = act
@@ -164,6 +166,29 @@ class Converter:
         for (pat, fl), i in regexes.items():
             pats[i] = [pat, fl] if fl else [pat]
         return {'regexes': pats, 'states': processed}
+
+
+def sort_pattern_alternations(pat):
+    """Sort set-based alternations for byte-deterministic output across OSes and Python builds."""
+    def repl_non_capturing(m):
+        content = m.group(1)
+        if content.count('|') >= 2 and '(' not in content:
+            words = content.split('|')
+            if all(re.fullmatch(r'[\w\-!#=.:/@]+', w) for w in words):
+                return '(?:' + '|'.join(sorted(words, key=lambda x: (-len(x), x))) + ')'
+        return m.group(0)
+
+    def repl_capturing(m):
+        content = m.group(1)
+        if content.count('|') >= 2 and '(' not in content:
+            words = content.split('|')
+            if all(re.fullmatch(r'[\w\-!#=.:/@]+', w) for w in words):
+                return '(' + '|'.join(sorted(words, key=lambda x: (-len(x), x))) + ')'
+        return m.group(0)
+
+    pat = re.sub(r'\(\?:([^\(\)]+)\)', repl_non_capturing, pat)
+    pat = re.sub(r'\(([^\(\)]+)\)', repl_capturing, pat)
+    return pat
 
 
 def is_surrogate(ch):
@@ -196,6 +221,24 @@ def strip_surrogates(pattern):
             out.append(c)
         i += 1
     return ''.join(out)
+
+
+def sanitize_pattern(pattern):
+    """Normalize regex patterns for Oniguruma compatibility.
+
+    - Strips lone UTF-16 surrogates.
+    - Strips Python's inline (?u) and (?a) flags which Oniguruma rejects in UTF-8 mode.
+    - Converts simple single-character alternations in look-behinds like (?<!(#|\\'|\\"))
+      into character classes (?<![#'\\"]) so Oniguruma recognizes them as fixed-width.
+    """
+    pattern = strip_surrogates(pattern)
+    pattern = re.sub(
+        r'\(\?([a-z]*)[ua]([a-z]*)\)',
+        lambda m: f'(?{m.group(1)}{m.group(2)})' if (m.group(1) or m.group(2)) else '',
+        pattern,
+    )
+    pattern = re.sub(r'\(\?<!\(#\|\\?\'\|\\?"\)\)', r'(?<![#\'\"])', pattern)
+    return pattern
 
 
 def closure_vars(fn):
@@ -519,7 +562,7 @@ def main():
         if opts != {'stripnl': True, 'stripall': False, 'ensurenl': True, 'tabsize': 0}:
             entry['options'] = opts
         needs = []
-        ctx = {'callbacks': set(), 'callback_fns': [], 'tmp': 0}
+        ctx = {'callbacks': set(), 'callback_fns': [], 'tmp': 0, 'clsname': clsname}
         gtu_owner = defining_class(cls, 'get_tokens_unprocessed')
         if isinstance(inst, plexer.DelegatingLexer) and gtu_owner is plexer.DelegatingLexer:
             entry['kind'] = 'delegating'
