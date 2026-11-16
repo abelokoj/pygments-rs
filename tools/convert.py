@@ -170,25 +170,17 @@ class Converter:
 
 def sort_pattern_alternations(pat):
     """Sort set-based alternations for byte-deterministic output across OSes and Python builds."""
-    def repl_non_capturing(m):
-        content = m.group(1)
+    def repl_group(m):
+        flag = m.group(1) or ''
+        content = m.group(2)
         if content.count('|') >= 2 and '(' not in content:
             words = content.split('|')
-            if all(re.fullmatch(r'[\w\-!#=.:/@]+', w) for w in words):
-                return '(?:' + '|'.join(sorted(words, key=lambda x: (-len(x), x))) + ')'
+            if len(words) >= 3 and all(re.fullmatch(r'[\w\-!#=.:/@]+', w) for w in words):
+                prefix = f'(?{flag}' if flag else '('
+                return prefix + '|'.join(sorted(words, key=lambda x: (-len(x), x))) + ')'
         return m.group(0)
 
-    def repl_capturing(m):
-        content = m.group(1)
-        if content.count('|') >= 2 and '(' not in content:
-            words = content.split('|')
-            if all(re.fullmatch(r'[\w\-!#=.:/@]+', w) for w in words):
-                return '(' + '|'.join(sorted(words, key=lambda x: (-len(x), x))) + ')'
-        return m.group(0)
-
-    pat = re.sub(r'\(\?:([^\(\)]+)\)', repl_non_capturing, pat)
-    pat = re.sub(r'\(([^\(\)]+)\)', repl_capturing, pat)
-    return pat
+    return re.sub(r'\((?:\?([:!=]))?([^\(\)]+)\)', repl_group, pat)
 
 
 def is_surrogate(ch):
