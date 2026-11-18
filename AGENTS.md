@@ -48,8 +48,8 @@ These behaviors match Pygments intentionally; do not "fix" or change them withou
 **Always build code cleanly, modularly, and with proper architecture and separation of concerns. Never simply bolt on a feature or quick fix because asked. If you cannot find an obvious or clean way, research online on GitHub for similar high-quality projects built with the same or close concepts, and follow that procedure to build it naturally.**
 
 - **Rust code quality:** When writing, reviewing, or refactoring Rust code, use the **`rust-best-practices`** skill (`/rust-best-practices`). Use **`rust-port`** (`/rust-port`) for translating Python lexer logic or C/Go highlighter concepts, and **`rust-review`** (`/rust-review`) for auditing existing modules.
-- **UI & Interface design:** Whenever anything related to a UI, visual layout, or interface is to be built or designed, use both the **`ui-ux-pro-max`** (`/ui-ux-pro-max`) and **`impeccable`** (`/impeccable`) skills to ensure consistent design and high aesthetics.
-- **NSH integration:** For builds, tools, components, or preview apps that require NSH, use the binary and source located in `C:\dev\nsh` and `C:\dev\nsh-src` (see §5).
+- **UI design:** For NSH interface design, implementation, changes, or review, follow `C:\dev\nsh-src\skills\nsh-design-guides\SKILL.md` and its referenced guides. Preserve established project visual language and accessibility requirements.
+- **NSH integration:** For tools or preview apps requiring NSH, use `C:\dev\nsh\bin\nsh.exe` for NSH compilation and packaging and consult relevant documentation and examples in `C:\dev\nsh-src` (see §5). Verify the tool matches the project before use and report a mismatch.
 - **Safety:** Every `unsafe` block must have an explicit `// SAFETY:` explanation.
 - **Performance:** Keep allocations minimal on the hot lexing paths: match regions are reused, tokens borrow from input slices, and regexes compile lazily once per rule.
 
@@ -77,7 +77,7 @@ When building or running commands requiring NSH:
 
 Local builds use [huacnlee/cargo](https://github.com/huacnlee/cargo), a drop-in fork of Cargo that shares one self-cleaning build directory between projects and worktrees so disk space is conserved:
 
-- **Active cargo check:** Ensure `cargo -V` ends with `(huacnlee/cargo …)`. If it does not (e.g., after `rustup self update` restored stock cargo), notify the maintainer; do not reinstall or modify toolchains yourself.
+- **Active cargo check:** Follow [huacnlee/cargo](https://github.com/huacnlee/cargo) and use the already installed `cargo` on PATH for local builds, checks, tests, Clippy and documentation. Check `Get-Command cargo` and ensure `cargo -V` identifies `(huacnlee/cargo …)`. If it does not (e.g., after `rustup self update` restored stock cargo), notify the maintainer; do not reinstall or modify toolchains yourself.
 - **Do not clean caches:** Never run `cargo clean` and never delete `target/` or `~/.cargo/targets/`. The fork manages garbage collection automatically, and manual cleaning forces unnecessary full rebuilds.
 - **Do not set target directories:** Do not pass `--target-dir`, `CARGO_TARGET_DIR`, `build.target-dir`, or `build.build-dir`. Output lives in `~/.cargo/targets/<name>-<hash>/` and shared dependencies in `~/.cargo/targets/shared-deps/`.
 - **Maintainer settings:** Leave `~/.cargo/config.toml` size limits and switches (`[build.gc]`, `CARGO_SHARED_DEPS`, etc.) at their defaults unless requested.
@@ -89,8 +89,8 @@ Local builds use [huacnlee/cargo](https://github.com/huacnlee/cargo), a drop-in 
 
 | Component | Path / Reference | Notes |
 |---|---|---|
-| NSH Tool & CLI (`nsh 0.5.1`) | `C:\dev\nsh` (binary at `C:\dev\nsh\bin\nsh.exe`) | Use for any builds requiring NSH |
-| NSH Source & Docs at v0.5.1 | `C:\dev\nsh-src` (`AGENTS.md`, `crates/`, `docs/`) | Reference for NSH components and APIs |
+| NSH Tool & CLI (verify version against project requirements) | `C:\dev\nsh` (binary at `C:\dev\nsh\bin\nsh.exe`) | Use for any builds requiring NSH |
+| NSH Source, Documentation & Examples (check the required revision) | `C:\dev\nsh-src` (`AGENTS.md`, `crates/`, `docs/`) | Reference for NSH components and APIs |
 | Reference AGENTS.md | `C:\dev\ExcellentPDF\AGENTS.md` | Benchmark rules and standards |
 | Pygments Upstream | https://pygments.org and Pygments 2.19.2 repository | Source of truth for lexer behaviors and test cases |
 

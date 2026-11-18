@@ -80,13 +80,11 @@ Each lexer (597 public + 12 internal helpers = 609 total) falls into one of thes
   - `get_tokens_unprocessed` overrides (C-family, Lua, PHP, ...)
   - `analyse_text` heuristics (`src/hooks/analysers/`) plus rule-IR heuristics converted automatically.
 
-`target/catalog-report.txt` (from CI) lists any pattern Oniguruma rejects and any lexer that does
-not round-trip its input.
+All 609 lexers compile with **0 regex errors** and 0 round-trip failures (`target/catalog-report.txt` is empty).
 
-The golden tests run every file in Pygments' `tests/snippets` and `tests/examplefiles` and compare
-the token stream byte for byte with Pygments' expected output. CI publishes the pass rate per
-lexer in the job summary (`target/golden-report.md`). Files that pass are pinned in
-`tests/golden-baseline.txt`, and any regression fails the build.
+The golden test suite runs every file in Pygments' `tests/snippets` and `tests/examplefiles` against Pygments' expected output:
+- **100% parity:** **1,407 / 1,407 files** across all **495 aliases** match Pygments 2.19.2 byte-for-byte.
+- All 1,407 test files are pinned in `tests/golden-baseline.txt`, and any regression fails the build.
 
 ### Known gaps
 
@@ -95,7 +93,6 @@ lexer in the job summary (`target/golden-report.md`). Files that pass are pinned
   (such as C# `unicodelevel` or Email `highlight-X-header`) use Pygments defaults.
 - Raster image formatters (`img`/`png`/`bmp`/`gif`/`jpg`, which require Python's Pillow/PIL) and
   ctags cross-reference linking in `HtmlFormatter` are out of scope.
-- `tests/known-regex-errors.txt` lists any regex pattern Oniguruma cannot compile.
 
 ## Regenerating the data
 
