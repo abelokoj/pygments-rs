@@ -123,6 +123,9 @@
  "CheetahHtmlLexer": [],
  "CheetahJavascriptLexer": [],
  "CheetahLexer": [],
+ "CheetahPythonLexer": [
+  "custom lexer (CheetahPythonLexer.get_tokens_unprocessed)"
+ ],
  "CheetahXmlLexer": [],
  "CirruLexer": [],
  "ClayLexer": [],
@@ -136,6 +139,7 @@
  "ColdfusionCFCLexer": [],
  "ColdfusionHtmlLexer": [],
  "ColdfusionLexer": [],
+ "ColdfusionMarkupLexer": [],
  "Comal80Lexer": [],
  "CommonLispLexer": [
   "get_tokens_unprocessed override in CommonLispLexer"
@@ -242,6 +246,9 @@
  "EmacsLispLexer": [
   "get_tokens_unprocessed override in EmacsLispLexer"
  ],
+ "EmailHeaderLexer": [
+  "callback email::EmailHeaderLexer.get_x_header_tokens"
+ ],
  "EmailLexer": [],
  "ErbLexer": [
   "custom lexer (ErbLexer.get_tokens_unprocessed)"
@@ -300,9 +307,11 @@
   "analyse_text (GasLexer: statement if re.search('^\\\\.(text|data|section)', text, re.M):)"
  ],
  "GcodeLexer": [],
+ "GenericAspxLexer": [],
  "GenshiLexer": [
   "analyse_text (GenshiLexer: statement rv = 0.0)"
  ],
+ "GenshiMarkupLexer": [],
  "GenshiTextLexer": [],
  "GettextLexer": [],
  "GherkinLexer": [],
@@ -430,6 +439,7 @@
  "JspLexer": [
   "analyse_text (JspLexer: statement rv = JavaLexer.analyse_text(text) - 0.01)"
  ],
+ "JspRootLexer": [],
  "JsxLexer": [],
  "JuliaConsoleLexer": [
   "custom lexer (JuliaConsoleLexer.get_tokens_unprocessed)"
@@ -717,7 +727,9 @@
  "PyPyLogLexer": [],
  "Python2Lexer": [],
  "Python2TracebackLexer": [],
- "PythonConsoleLexer": [],
+ "PythonConsoleLexer": [
+  "custom lexer (PythonConsoleLexer.get_tokens_unprocessed)"
+ ],
  "PythonLexer": [
   "analyse_text (PythonLexer: in-test on non-text)"
  ],
@@ -829,6 +841,9 @@
  "SingularityLexer": [
   "analyse_text (SingularityLexer: statement result = 0)"
  ],
+ "SlashLanguageLexer": [
+  "callback slash::SlashLanguageLexer.right_angle_bracket"
+ ],
  "SlashLexer": [],
  "SlimLexer": [
   "callback css::_indentation",
@@ -909,9 +924,11 @@
  "TcshSessionLexer": [
   "custom lexer (ShellSessionBaseLexer.get_tokens_unprocessed)"
  ],
+ "TeaLangLexer": [],
  "TeaTemplateLexer": [
   "analyse_text (TeaTemplateLexer: statement rv = TeaLangLexer.analyse_text(text) - 0.01)"
  ],
+ "TeaTemplateRootLexer": [],
  "TealLexer": [],
  "TeraTermLexer": [],
  "TermcapLexer": [],
@@ -937,6 +954,7 @@
  "TransactSqlLexer": [
   "analyse_text (TransactSqlLexer: statement rating = 0)"
  ],
+ "TreetopBaseLexer": [],
  "TreetopLexer": [],
  "TsxLexer": [],
  "TurtleLexer": [
@@ -1073,5 +1091,6 @@
  "ZeekLexer": [],
  "ZephirLexer": [],
  "ZigLexer": [],
+ "_PythonConsoleLexerBase": [],
  "apdlexer": []
 }

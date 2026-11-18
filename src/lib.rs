@@ -25,14 +25,22 @@
 
 mod analyse;
 mod engine;
+pub mod filter;
+pub mod formatters;
 mod generated;
 mod hooks;
 mod lexer;
+mod pyregex;
 mod registry;
 mod style;
 mod token;
 
-pub use lexer::{LexState, Lexer, Tokens};
+pub use filter::{CowToken, ErrorToken, Filter, FilterError, apply_filters, filter_by_name, filter_names};
+pub use formatters::{
+    Formatter, FormatterError, format, format_string, formatter_by_name, formatter_for_filename, formatter_names,
+    highlight,
+};
+pub use lexer::{LexOptions, LexState, Lexer, Tokens};
 pub use registry::{all_lexers, guess_lexer, lexer_by_name, lexer_for_filename, lexer_for_mimetype};
 pub use style::{Color, Style, TokenStyle, style_by_name, style_names};
 pub use token::TokenType;

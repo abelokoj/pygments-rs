@@ -82,9 +82,42 @@ pub(super) fn gosu_template(_lexer: &'static LexerImpl, text: &str, out: &mut Ve
     }
 }
 
+pub(super) fn cheetah_python(_lexer: &'static LexerImpl, text: &str, out: &mut Vec<Tok>) {
+    match crate::registry::by_class("PythonLexer") {
+        Some(py) => {
+            let first = out.len();
+            py.tokens_unprocessed(text, None, out);
+            for t in &mut out[first..] {
+                if t.ty == TokenType::ERROR && text.get(t.start..t.end) == Some("$") {
+                    t.ty = TokenType::COMMENT_PREPROC;
+                }
+            }
+        }
+        None => out.push(Tok::new(TokenType::TOKEN, 0, text.len())),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::super::{exp, lex};
+
+    #[test]
+    fn cheetah_dollar() {
+        assert_eq!(
+            lex("cheetah", "#set $x = 1\n"),
+            exp(&[
+                ("Comment.Preproc", "#set"),
+                ("Text", " "),
+                ("Comment.Preproc", "$"),
+                ("Name", "x"),
+                ("Text", " "),
+                ("Operator", "="),
+                ("Text", " "),
+                ("Literal.Number.Integer", "1"),
+                ("Other", "\n"),
+            ])
+        );
+    }
 
     #[test]
     fn erb_blocks() {

@@ -15,10 +15,13 @@ These notes cover the port of Pygments 2.19.2 (`pygments/lexer.py`, `token.py`, 
 | `DelegatingLexer` | `hooks::delegate` | Engine port |
 | `do_insertions` | `hooks::do_insertions` | Exact port |
 | `_TokenType`, `Token.*`, `STANDARD_TYPES` | `TokenType` (`src/token.rs`, generated table) | Converted |
-| `Lexer.get_tokens` preprocessing (BOM, newlines, `stripnl`, `stripall`, `tabsize`, `ensurenl`) | `Lexer::preprocess` | Port |
+| `Lexer.get_tokens` preprocessing (BOM, newlines, `stripnl`, `stripall`, `tabsize`, `ensurenl`) | `Lexer::preprocess`, `Lexer::preprocess_with`, `LexOptions` | Port |
 | `get_lexer_by_name` / `_for_filename` / `_for_mimetype`, `guess_lexer`, `fnmatch` | `src/registry.rs` | Port with the same rating and tie-break rules |
 | `analyse_text`, `make_analysator`, `shebang_matches`, `doctype_matches`, `html_doctype_matches`, `looks_like_xml`, `modeline.get_filetype_from_buffer` | `src/analyse.rs`, `src/hooks/analysers` | Simple ones converted to an IR; the rest hand-ported |
 | `Style` subclasses | `Style`, `data/styles.json` | Converted after Pygments resolves inheritance |
+| `pygments.filters` (`FILTERS`) | `src/filter.rs`, `src/generated/symbols.rs` | All 8 filters ported |
+| `pygments.formatters` | `src/formatters/*`, `highlight`, `format` | All 14 pure-text formatters ported (PIL image formatters excluded) |
+| `pygments.cmdline` | `src/bin/pygmentize.rs` | Pure-Rust `pygmentize` CLI |
 
 ## Test mapping
 
@@ -37,7 +40,9 @@ These notes cover the port of Pygments 2.19.2 (`pygments/lexer.py`, `token.py`, 
   slices, so this is invisible unless you use `next_span()`.
 - **Lone UTF-16 surrogates.** Pygments' Unicode category classes contain lone surrogates. A Rust
   `&str` can never contain one, so the converter removes them from patterns.
-- **No lexer options.** Every lexer runs with its defaults.
+- **Language-specific constructor options.** Common preprocessing options (`stripnl`, `stripall`,
+  `ensurenl`, `tabsize`) are supported via [`LexOptions`](src/lexer.rs); non-default lexer
+  constructor options use Pygments defaults.
 - **Incremental resume (`LexState`, `tokenize_from`)** is new API. A full run yields exactly what a
   single Pygments run yields.
 

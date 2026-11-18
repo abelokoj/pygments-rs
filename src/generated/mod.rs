@@ -4,4 +4,6 @@
 #[rustfmt::skip]
 pub(crate) mod registry;
 #[rustfmt::skip]
+pub(crate) mod symbols;
+#[rustfmt::skip]
 pub(crate) mod tokens;

@@ -8,7 +8,7 @@
 use std::collections::{HashMap, VecDeque};
 use std::sync::OnceLock;
 
-use onig::{Regex, RegexOptions, Region, SearchOptions, Syntax};
+use onig::{Regex, Region, SearchOptions};
 use serde::Deserialize;
 use serde_json::Value;
 
@@ -107,7 +107,7 @@ struct Rule {
 }
 
 pub(crate) struct RegexLexer {
-    patterns: Box<[(Box<str>, RegexOptions)]>,
+    patterns: Box<[(Box<str>, Box<str>)]>,
     regexes: Box<[OnceLock<Option<Regex>>]>,
     states: Box<[Box<[Rule]>]>,
     state_ids: HashMap<Box<str>, StateId>,
@@ -118,26 +118,9 @@ pub(crate) struct RegexLexer {
     pub(crate) filter: Option<FilterFn>,
 }
 
-fn regex_options(flags: &str) -> RegexOptions {
-    let mut o = RegexOptions::REGEX_OPTION_CAPTURE_GROUP;
-    for c in flags.chars() {
-        o |= match c {
-            'i' => RegexOptions::REGEX_OPTION_IGNORECASE,
-            // Python MULTILINE: ^/$ at line breaks. Onig's Python syntax
-            // defaults to SINGLELINE, so negate it.
-            'm' => RegexOptions::REGEX_OPTION_NEGATE_SINGLELINE,
-            // Python DOTALL is Onig's (Ruby-style) MULTILINE.
-            's' => RegexOptions::REGEX_OPTION_MULTILINE,
-            'x' => RegexOptions::REGEX_OPTION_EXTEND,
-            _ => RegexOptions::REGEX_OPTION_NONE,
-        };
-    }
-    o
-}
-
 /// Compile a Python-syntax pattern with Python `re` flag letters (`"imsx"`).
 pub(crate) fn compile(pattern: &str, flags: &str) -> Result<Regex, onig::Error> {
-    Regex::with_options(pattern, regex_options(flags), Syntax::python())
+    crate::pyregex::compile(pattern, flags)
 }
 
 impl RegexLexer {
@@ -148,12 +131,12 @@ impl RegexLexer {
         states: Vec<(String, Vec<RuleData>)>,
         initial_stack: &[String],
     ) -> RegexLexer {
-        let patterns: Box<[(Box<str>, RegexOptions)]> = regexes
+        let patterns: Box<[(Box<str>, Box<str>)]> = regexes
             .into_iter()
             .map(|mut p| {
-                let flags = p.get(1).cloned().unwrap_or_default();
+                let flags = p.get(1).cloned().unwrap_or_default().into_boxed_str();
                 p.truncate(1);
-                (p.pop().unwrap_or_default().into_boxed_str(), regex_options(&flags))
+                (p.pop().unwrap_or_default().into_boxed_str(), flags)
             })
             .collect();
         let state_ids: HashMap<Box<str>, StateId> =
@@ -221,8 +204,8 @@ impl RegexLexer {
         let i = i as usize;
         self.regexes[i]
             .get_or_init(|| {
-                let (pat, opts) = &self.patterns[i];
-                Regex::with_options(pat, *opts, Syntax::python()).ok()
+                let (pat, flags) = &self.patterns[i];
+                compile(pat, flags).ok()
             })
             .as_ref()
     }
@@ -231,10 +214,8 @@ impl RegexLexer {
     pub(crate) fn regex_errors(&self) -> Vec<(String, String)> {
         self.patterns
             .iter()
-            .filter_map(|(pat, opts)| {
-                Regex::with_options(pat, *opts, Syntax::python())
-                    .err()
-                    .map(|e| (pat.to_string(), e.description().to_string()))
+            .filter_map(|(pat, flags)| {
+                compile(pat, flags).err().map(|e| (pat.to_string(), e.description().to_string()))
             })
             .collect()
     }

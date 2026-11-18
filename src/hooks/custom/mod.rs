@@ -16,6 +16,7 @@ pub(crate) static MODULE: Module = Module {
     callbacks: &[],
     filters: &[],
     custom: &[
+        ("CheetahPythonLexer", templates::cheetah_python),
         ("DelphiLexer", delphi::delphi),
         ("ErbLexer", templates::erb),
         ("GosuTemplateLexer", templates::gosu_template),

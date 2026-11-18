@@ -1,6 +1,7 @@
 //! Color schemes, converted from every `pygments.styles` style.
 
 use std::collections::HashMap;
+use std::fmt;
 use std::sync::LazyLock;
 
 use serde::Deserialize;
@@ -21,6 +22,7 @@ pub struct Color {
 impl Color {
     /// Parse `"#rrggbb"`, `"rrggbb"`, `"#rgb"` or `"rgb"`; `None` for
     /// anything else (`"transparent"`, `"inherit"`, ANSI names).
+    #[must_use]
     pub fn parse(s: &str) -> Option<Color> {
         let h = s.strip_prefix('#').unwrap_or(s);
         if !h.bytes().all(|b| b.is_ascii_hexdigit()) {
@@ -35,6 +37,18 @@ impl Color {
             }
             _ => None,
         }
+    }
+
+    /// Format as six lowercase hex digits without `#` (e.g. `"272822"`).
+    #[must_use]
+    pub fn to_hex(self) -> String {
+        format!("{:02x}{:02x}{:02x}", self.r, self.g, self.b)
+    }
+}
+
+impl fmt::Display for Color {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "#{:02x}{:02x}{:02x}", self.r, self.g, self.b)
     }
 }
 
@@ -74,14 +88,31 @@ pub struct Style {
     pub line_number_color: Option<Color>,
     /// Line number background (`None` means transparent).
     pub line_number_background: Option<Color>,
+    /// Special line number color (`None` means default).
+    pub line_number_special_color: Option<Color>,
+    /// Special line number background (`None` means transparent).
+    pub line_number_special_background: Option<Color>,
     tokens: HashMap<TokenType, TokenStyle>,
+    order: Vec<TokenType>,
 }
 
 impl Style {
     /// The style for `ty`, inherited from the nearest ancestor that the scheme
     /// styles (Pygments resolves `noinherit` and the `Token` defaults already).
+    #[must_use]
     pub fn style_for(&self, ty: TokenType) -> TokenStyle {
         ty.ancestors().find_map(|t| self.tokens.get(&t).copied()).unwrap_or_default()
+    }
+
+    /// Whether this scheme defines an entry for `ty`.
+    #[must_use]
+    pub fn styles_token(&self, ty: TokenType) -> bool {
+        self.tokens.contains_key(&ty)
+    }
+
+    /// Iterate over `(token_type, style)` pairs in Pygments' `Style._styles` definition order.
+    pub fn iter(&self) -> impl Iterator<Item = (TokenType, TokenStyle)> + '_ {
+        self.order.iter().filter_map(|&ty| self.tokens.get(&ty).map(|&st| (ty, st)))
     }
 }
 
@@ -92,6 +123,10 @@ struct StyleData {
     highlight: Option<String>,
     line_number_color: Option<String>,
     line_number_background: Option<String>,
+    line_number_special_color: Option<String>,
+    line_number_special_background: Option<String>,
+    #[serde(default)]
+    order: Vec<String>,
     tokens: HashMap<String, EntryData>,
 }
 
@@ -120,7 +155,7 @@ static STYLES: LazyLock<Vec<(String, Style)>> = LazyLock::new(|| {
     let color = |s: &Option<String>| s.as_deref().and_then(Color::parse);
     raw.into_iter()
         .map(|(key, d)| {
-            let tokens = d
+            let tokens: HashMap<TokenType, TokenStyle> = d
                 .tokens
                 .iter()
                 .filter_map(|(name, e)| {
@@ -141,13 +176,21 @@ static STYLES: LazyLock<Vec<(String, Style)>> = LazyLock::new(|| {
                     ))
                 })
                 .collect();
+            let order = if d.order.is_empty() {
+                tokens.keys().copied().collect()
+            } else {
+                d.order.iter().filter_map(|name| TokenType::from_name(name)).collect()
+            };
             let style = Style {
                 name: d.name.clone(),
                 background: color(&d.background),
                 highlight: color(&d.highlight),
                 line_number_color: color(&d.line_number_color),
                 line_number_background: color(&d.line_number_background),
+                line_number_special_color: color(&d.line_number_special_color),
+                line_number_special_background: color(&d.line_number_special_background),
                 tokens,
+                order,
             };
             (key, style)
         })
@@ -155,8 +198,13 @@ static STYLES: LazyLock<Vec<(String, Style)>> = LazyLock::new(|| {
 });
 
 /// A bundled style by its Pygments name (`"monokai"`, `"github-dark"`, ...).
+#[must_use]
 pub fn style_by_name(name: &str) -> Option<&'static Style> {
     STYLES.iter().find(|(k, _)| k == name).map(|(_, s)| s)
+}
+
+pub(crate) fn default_style() -> &'static Style {
+    style_by_name("default").expect("bundled default style")
 }
 
 /// Names of all bundled styles, sorted.

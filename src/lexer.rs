@@ -200,21 +200,23 @@ impl Lexer {
         crate::analyse::score(self.info().class, text)
     }
 
-    /// Normalize input the way Pygments' `get_tokens` does before lexing:
-    /// drop a BOM, turn `\r\n` and `\r` into `\n`, strip leading and
-    /// trailing newlines, expand tabs if the lexer asks for it and make sure
-    /// the text ends with `\n`. Lexing the result reproduces Pygments' output
-    /// exactly; editors that need offsets into their own buffer should lex the
-    /// raw text instead.
-    pub fn preprocess(self, text: &str) -> Cow<'_, str> {
+    /// This lexer's default preprocessing options.
+    #[must_use]
+    pub fn default_options(self) -> LexOptions {
         let info = self.info();
+        LexOptions { stripnl: info.stripnl, stripall: info.stripall, ensurenl: info.ensurenl, tabsize: info.tabsize }
+    }
+
+    /// Normalize input with explicit [`LexOptions`] instead of the lexer's defaults.
+    #[must_use]
+    pub fn preprocess_with<'a>(self, text: &'a str, opts: &LexOptions) -> Cow<'a, str> {
         let mut t: Cow<'_, str> = Cow::Borrowed(text.strip_prefix('\u{feff}').unwrap_or(text));
         if t.contains('\r') {
             t = Cow::Owned(t.replace("\r\n", "\n").replace('\r', "\n"));
         }
-        let trimmed: &str = if info.stripall {
+        let trimmed: &str = if opts.stripall {
             t.trim_matches(py_whitespace)
-        } else if info.stripnl {
+        } else if opts.stripnl {
             t.trim_matches('\n')
         } else {
             &t
@@ -222,13 +224,24 @@ impl Lexer {
         if trimmed.len() != t.len() {
             t = Cow::Owned(trimmed.to_owned());
         }
-        if info.tabsize > 0 && t.contains('\t') {
-            t = Cow::Owned(expand_tabs(&t, info.tabsize));
+        if opts.tabsize > 0 && t.contains('\t') {
+            t = Cow::Owned(expand_tabs(&t, opts.tabsize));
         }
-        if info.ensurenl && !t.ends_with('\n') {
+        if opts.ensurenl && !t.ends_with('\n') {
             t.to_mut().push('\n');
         }
         t
+    }
+
+    /// Normalize input the way Pygments' `get_tokens` does before lexing:
+    /// drop a BOM, turn `\r\n` and `\r` into `\n`, strip leading and
+    /// trailing newlines, expand tabs if the lexer asks for it and make sure
+    /// the text ends with `\n`. Lexing the result reproduces Pygments' output
+    /// exactly; editors that need offsets into their own buffer should lex the
+    /// raw text instead.
+    #[must_use]
+    pub fn preprocess(self, text: &str) -> Cow<'_, str> {
+        self.preprocess_with(text, &self.default_options())
     }
 
     /// Tokenize `text` from the start. Concatenating the token texts gives
@@ -282,7 +295,7 @@ impl fmt::Debug for Lexer {
     }
 }
 
-fn py_whitespace(c: char) -> bool {
+pub(crate) fn py_whitespace(c: char) -> bool {
     // Python's str.strip() default set: Unicode whitespace plus the ASCII
     // separators 0x1c-0x1f that Rust does not count as whitespace.
     c.is_whitespace() || ('\x1c'..='\x1f').contains(&c)
@@ -310,6 +323,33 @@ fn expand_tabs(s: &str, tabsize: usize) -> String {
         }
     }
     out
+}
+
+/// Options controlling how [`Lexer::preprocess_with`] normalizes input text.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct LexOptions {
+    /// Strip leading and trailing `\n` characters before lexing.
+    pub stripnl: bool,
+    /// Strip all leading and trailing whitespace before lexing.
+    pub stripall: bool,
+    /// Append a trailing `\n` if the text does not already end with one.
+    pub ensurenl: bool,
+    /// Expand `\t` characters with this tab width (`0` disables tab expansion).
+    pub tabsize: usize,
+}
+
+impl Default for LexOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl LexOptions {
+    /// Pygments' default preprocessing options (`stripnl: true`, `ensurenl: true`).
+    #[must_use]
+    pub const fn new() -> Self {
+        Self { stripnl: true, stripall: false, ensurenl: true, tabsize: 0 }
+    }
 }
 
 /// Lexer state at a token boundary: the state stack plus any state a ported

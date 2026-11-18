@@ -29,14 +29,19 @@ ROOT = Path(__file__).resolve().parent.parent
 RE_FLAGS = {re.IGNORECASE: 'i', re.MULTILINE: 'm', re.DOTALL: 's', re.VERBOSE: 'x'}
 
 
+def write_lf(path, content):
+    Path(path).write_bytes(content.encode('utf-8'))
+
+
 def load_pygments(path):
     sys.path.insert(0, str(Path(path).resolve()))
     import pygments
+    import pygments.filters as pfilters
     import pygments.lexer as plexer
     import pygments.lexers as plexers
     import pygments.styles as pstyles
     import pygments.token as ptoken
-    return pygments, plexer, plexers, pstyles, ptoken
+    return pygments, plexer, plexers, pstyles, ptoken, pfilters
 
 
 def tok_name(tok):
@@ -74,10 +79,20 @@ class Converter:
             other = cells.get('_other')
             out['using'] = 'this' if other is None else other.__name__
             stack = cells['gt_kwargs'].get('stack')
+            opts = cells.get('kwargs') or {}
+            if opts.get('startinline') or opts.get('_startinline'):
+                stack = ('root', 'php')
+            elif 'i6t' in opts and other is None:
+                v = opts['i6t']
+                prefix = '' if v == ctx.get('variant_default') else f'{v}::'
+                stack = [f'{prefix}{st}' for st in (stack if stack is not None else ('root',))]
+            elif other is None and stack is not None and ctx.get('state_prefix'):
+                prefix = ctx['state_prefix']
+                stack = [f'{prefix}{st}' for st in stack]
             if stack is not None:
                 out['stack'] = list(stack)
-            if cells.get('kwargs'):
-                out['options'] = {k: jsonable(v) for k, v in cells['kwargs'].items()}
+            if opts:
+                out['options'] = {k: jsonable(v) for k, v in opts.items()}
             return out
         # A Python callback: needs a Rust port, keyed by module + qualname.
         key = f'{act.__module__.rsplit(".", 1)[-1]}::{qual}'
@@ -92,6 +107,13 @@ class Converter:
     # -- states ----------------------------------------------------------
     def new_state(self, ns, unprocessed, processed, regexes, ctx):
         p = self.plexer
+        prefix = ctx.get('state_prefix', '')
+
+        def qualify(s):
+            if not prefix or s in ('#push', '#pop') or s.startswith('#pop:'):
+                return s
+            return f'{prefix}{s}'
+
         if isinstance(ns, p.combined):
             name = f'_tmp_{ctx["tmp"]}'
             ctx['tmp'] += 1
@@ -105,9 +127,9 @@ class Converter:
                 return {'pop': 1}
             if ns.startswith('#pop:'):
                 return {'pop': int(ns[5:])}
-            return {'push': [ns]}  # a state name or '#push'
+            return {'push': [qualify(ns)]}  # a state name or '#push'
         if isinstance(ns, tuple):
-            return {'push': list(ns)}
+            return {'push': [qualify(s) for s in ns]}
         raise ValueError(f'unknown new state {ns!r}')
 
     def regex(self, pattern, flags, regexes, ctx=None):
@@ -125,9 +147,11 @@ class Converter:
 
     def state(self, unprocessed, processed, name, regexes, ctx):
         p = self.plexer
-        if name in processed:
-            return processed[name]
-        rules = processed[name] = []
+        prefix = ctx.get('state_prefix', '')
+        out_name = f'{prefix}{name}' if prefix else name
+        if out_name in processed:
+            return processed[out_name]
+        rules = processed[out_name] = []
         for tdef in unprocessed[name]:
             if isinstance(tdef, p.include):
                 rules.extend(self.state(unprocessed, processed, str(tdef), regexes, ctx))
@@ -149,19 +173,32 @@ class Converter:
         return rules
 
     def regex_lexer(self, cls, inst, ctx):
-        if getattr(cls, 'token_variants', None):
+        variants = getattr(cls, 'token_variants', None)
+        if variants:
             # Variant lexers (C#, Nemerle, Inform 7) pick a token set per option;
-            # we convert the one a default-constructed lexer uses.
+            # we convert the one a default-constructed lexer uses, plus all variants
+            # when token_variants enumerates them explicitly.
             key = next(k for k, v in cls._all_tokens.items() if v is inst._tokens)
             unprocessed = cls.tokens[key]
             ctx['variant'] = key
+            ctx['variant_default'] = key
         else:
             unprocessed = cls.get_tokendefs()
         processed = {}
         regexes = {}
         ctx['flags'] = cls.flags
+        ctx['state_prefix'] = ''
         for st in list(unprocessed):
             self.state(unprocessed, processed, st, regexes, ctx)
+        if isinstance(variants, (list, tuple)):
+            for vkey in variants:
+                if vkey == ctx['variant_default']:
+                    continue
+                ctx['state_prefix'] = f'{vkey}::'
+                v_unprocessed = cls.tokens[vkey]
+                for st in list(v_unprocessed):
+                    self.state(v_unprocessed, processed, st, regexes, ctx)
+            ctx['state_prefix'] = ''
         pats = [None] * len(regexes)
         for (pat, fl), i in regexes.items():
             pats[i] = [pat, fl] if fl else [pat]
@@ -175,12 +212,23 @@ def sort_pattern_alternations(pat):
         content = m.group(2)
         if content.count('|') >= 2 and '(' not in content:
             words = content.split('|')
-            if len(words) >= 3 and all(re.fullmatch(r'[\w\-!#=.:/@]+', w) for w in words):
+            if len(words) >= 3 and all(re.fullmatch(r'[\w!#=.:/@\\-]+', w) for w in words):
                 prefix = f'(?{flag}' if flag else '('
                 return prefix + '|'.join(sorted(words, key=lambda x: (-len(x), x))) + ')'
         return m.group(0)
 
-    return re.sub(r'\((?:\?([:!=]))?([^\(\)]+)\)', repl_group, pat)
+    pat = re.sub(r'\((?:\?([:!=]))?([^\(\)]+)\)', repl_group, pat)
+
+    # WikitextLexer parser_functions_i pattern: (?i)(\#[...]*?|GENDER|...)(:)
+    m = re.match(r'^(.*?\(\\#[^|]*\|)(.+)(\)\(:\))$', pat)
+    if m:
+        prefix = m.group(1)
+        words = m.group(2).split('|')
+        suffix = m.group(3)
+        if len(words) >= 3 and all(re.fullmatch(r'[\w\\#]+', w) for w in words):
+            pat = prefix + '|'.join(sorted(words, key=lambda x: (-len(x), x))) + suffix
+
+    return pat
 
 
 def is_surrogate(ch):
@@ -344,7 +392,10 @@ def defining_class(cls, attr):
 
 def glob_regex(glob):
     # fnmatch.translate gives Python-syntax regex; Oniguruma's Python syntax accepts it.
-    return fnmatch.translate(glob)
+    res = fnmatch.translate(glob)
+    if res.endswith(r'\z'):
+        res = res[:-2] + r'\Z'
+    return res
 
 
 # -- analyse_text --------------------------------------------------------
@@ -513,7 +564,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--pygments', required=True)
     args = ap.parse_args()
-    pygments, plexer, plexers, pstyles, ptoken = load_pygments(args.pygments)
+    pygments, plexer, plexers, pstyles, ptoken, pfilters = load_pygments(args.pygments)
     from pygments.lexers._mapping import LEXERS
 
     out_dir = ROOT / 'data' / 'lexers'
@@ -527,11 +578,24 @@ def main():
     analyse = {}
     # Unregistered helper lexers that hand-ported code reaches by class name.
     # They get no aliases, filenames or MIME types, so lookups never return them.
-    helpers = {'PsqlRegexLexer': 'pygments.lexers.sql'}
+    helpers = {
+        'CheetahPythonLexer': 'pygments.lexers.templates',
+        'ColdfusionMarkupLexer': 'pygments.lexers.templates',
+        'EmailHeaderLexer': 'pygments.lexers.email',
+        'GenericAspxLexer': 'pygments.lexers.dotnet',
+        'GenshiMarkupLexer': 'pygments.lexers.templates',
+        'JspRootLexer': 'pygments.lexers.templates',
+        'PsqlRegexLexer': 'pygments.lexers.sql',
+        'SlashLanguageLexer': 'pygments.lexers.slash',
+        'TeaLangLexer': 'pygments.lexers.jvm',
+        'TeaTemplateRootLexer': 'pygments.lexers.templates',
+        'TreetopBaseLexer': 'pygments.lexers.parsers',
+        '_PythonConsoleLexerBase': 'pygments.lexers.python',
+    }
     entries = {k: v for k, v in LEXERS.items()}
     for clsname, modname in helpers.items():
         hcls = getattr(importlib.import_module(modname), clsname)
-        entries[clsname] = (modname, hcls.name, (), (), ())
+        entries[clsname] = (modname, getattr(hcls, 'name', None) or clsname, (), (), ())
     for clsname in sorted(entries):
         modname, name, aliases, filenames, mimetypes = entries[clsname]
         cls = (getattr(importlib.import_module(modname), clsname) if clsname in helpers
@@ -545,9 +609,9 @@ def main():
             'module': modname.rsplit('.', 1)[-1],
             'aliases': list(aliases),
             'filenames': [[g, glob_regex(g)] for g in filenames],
-            'alias_filenames': [[g, glob_regex(g)] for g in cls.alias_filenames],
+            'alias_filenames': [[g, glob_regex(g)] for g in getattr(cls, 'alias_filenames', ())],
             'mimetypes': list(mimetypes),
-            'priority': float(cls.priority),
+            'priority': 0.0 if clsname in helpers else float(getattr(cls, 'priority', 0.0)),
             'url': getattr(cls, 'url', None),
         }
         opts = {'stripnl': inst.stripnl, 'stripall': inst.stripall, 'ensurenl': inst.ensurenl, 'tabsize': inst.tabsize}
@@ -556,7 +620,11 @@ def main():
         needs = []
         ctx = {'callbacks': set(), 'callback_fns': [], 'tmp': 0, 'clsname': clsname}
         gtu_owner = defining_class(cls, 'get_tokens_unprocessed')
-        if isinstance(inst, plexer.DelegatingLexer) and gtu_owner is plexer.DelegatingLexer:
+        if (
+            isinstance(inst, plexer.DelegatingLexer)
+            and gtu_owner is plexer.DelegatingLexer
+            and '.<locals>.' not in type(inst.language_lexer).__qualname__
+        ):
             entry['kind'] = 'delegating'
             entry['root'] = type(inst.root_lexer).__name__
             entry['language'] = type(inst.language_lexer).__name__
@@ -579,8 +647,8 @@ def main():
                 needs.append(f'callback {cb}')
         else:
             entry['kind'] = 'custom'
-            entry['override'] = gtu_owner.__name__
-            needs.append(f'custom lexer ({gtu_owner.__name__}.get_tokens_unprocessed)')
+            entry['override'] = clsname if isinstance(inst, plexer.DelegatingLexer) else gtu_owner.__name__
+            needs.append(f'custom lexer ({entry["override"]}.get_tokens_unprocessed)')
         if needs:
             fns = hook_functions(cls, plexer)
             for cb in ctx['callback_fns']:
@@ -588,7 +656,10 @@ def main():
             consts = hook_consts(inst, fns, plexer)
             if consts:
                 entry['consts'] = consts
-        ir, reason = analyse_text_of(cls, module, plexer)
+        if clsname in helpers:
+            ir, reason = None, None
+        else:
+            ir, reason = analyse_text_of(cls, module, plexer)
         if ir is not None:
             entry['analyse'] = ir
         elif reason:
@@ -597,16 +668,17 @@ def main():
             needs.append(f'analyse_text ({reason})')
         if 'analyse' in entry:
             analyse[clsname] = entry.pop('analyse')
-        (out_dir / f'{clsname}.json').write_text(json.dumps(entry, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+        write_lf(out_dir / f'{clsname}.json', json.dumps(entry, ensure_ascii=False, separators=(',', ':')))
         index.append(entry)
         report[clsname] = needs
 
     write_tokens(ptoken)
+    write_symbols(pfilters)
     write_styles(pstyles, ptoken)
     write_registry(index)
-    (ROOT / 'data' / 'analyse.json').write_text(json.dumps(analyse, ensure_ascii=False, separators=(',', ':'), sort_keys=True), encoding='utf-8')
-    (ROOT / 'data' / 'report.json').write_text(json.dumps(report, indent=1, sort_keys=True), encoding='utf-8')
-    (ROOT / 'PYGMENTS_VERSION').write_text(pygments.__version__ + '\n', encoding='utf-8')
+    write_lf(ROOT / 'data' / 'analyse.json', json.dumps(analyse, ensure_ascii=False, separators=(',', ':'), sort_keys=True))
+    write_lf(ROOT / 'data' / 'report.json', json.dumps(report, indent=1, sort_keys=True))
+    write_lf(ROOT / 'PYGMENTS_VERSION', pygments.__version__ + '\n')
     auto = sum(1 for n in report.values() if not n)
     print(f'{len(index)} lexers, {auto} need no Rust code, {len(index) - auto} need hand-ported pieces')
 
@@ -635,13 +707,14 @@ def write_tokens(ptoken):
         '#![allow(missing_docs)]',
         'use crate::token::TokenType;',
         '',
-        '/// `(full name, parent index, short CSS class)`; index 0 is `Token`.',
-        f'pub(crate) static TOKENS: [(&str, u16, &str); {len(toks)}] = [',
+        '/// `(full name, parent index, short CSS class, is standard)`; index 0 is `Token`.',
+        f'pub(crate) static TOKENS: [(&str, u16, &str, bool); {len(toks)}] = [',
     ]
     for t in toks:
         parent = index[t.parent] if t.parent is not None else 0
         short = ptoken.STANDARD_TYPES.get(t, '')
-        lines.append(f'    ({json.dumps(str(t))}, {parent}, {json.dumps(short)}),')
+        std = 'true' if t in ptoken.STANDARD_TYPES else 'false'
+        lines.append(f'    ({json.dumps(str(t))}, {parent}, {json.dumps(short)}, {std}),')
     lines.append('];')
     lines.append('')
     lines.append('impl TokenType {')
@@ -654,7 +727,39 @@ def write_tokens(ptoken):
         lines.append(f'    pub const {ident}: TokenType = TokenType({i});')
     lines.append('}')
     (ROOT / 'src' / 'generated').mkdir(parents=True, exist_ok=True)
-    (ROOT / 'src' / 'generated' / 'tokens.rs').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    write_lf(ROOT / 'src' / 'generated' / 'tokens.rs', '\n'.join(lines) + '\n')
+
+
+def rust_str(s):
+    out = ['"']
+    for ch in s:
+        if ch == '\\':
+            out.append('\\\\')
+        elif ch == '"':
+            out.append('\\"')
+        elif ord(ch) < 0x20 or ord(ch) >= 0x7F:
+            out.append(f'\\u{{{ord(ch):04x}}}')
+        else:
+            out.append(ch)
+    out.append('"')
+    return ''.join(out)
+
+
+def write_symbols(pfilters):
+    sf = pfilters.SymbolFilter
+    lines = [
+        '// @generated by tools/convert.py from Pygments. Do not edit.',
+        '#![allow(missing_docs)]',
+    ]
+    for rust_name, d in (('ISABELLE_SYMBOLS', sf.isabelle_symbols), ('LATEX_SYMBOLS', sf.latex_symbols)):
+        items = sorted(d.items())
+        lines.append('')
+        lines.append(f'pub(crate) static {rust_name}: [(&str, &str); {len(items)}] = [')
+        for k, v in items:
+            lines.append(f'    ({rust_str(k)}, {rust_str(v)}),')
+        lines.append('];')
+    (ROOT / 'src' / 'generated').mkdir(parents=True, exist_ok=True)
+    write_lf(ROOT / 'src' / 'generated' / 'symbols.rs', '\n'.join(lines) + '\n')
 
 
 def write_styles(pstyles, ptoken):
@@ -680,9 +785,12 @@ def write_styles(pstyles, ptoken):
             'highlight': st.highlight_color,
             'line_number_color': st.line_number_color,
             'line_number_background': st.line_number_background_color,
+            'line_number_special_color': st.line_number_special_color,
+            'line_number_special_background': st.line_number_special_background_color,
+            'order': [str(tok) for tok in st._styles],
             'tokens': entries,
         }
-    (ROOT / 'data' / 'styles.json').write_text(json.dumps(styles, indent=0, sort_keys=True), encoding='utf-8')
+    write_lf(ROOT / 'data' / 'styles.json', json.dumps(styles, indent=0, sort_keys=True))
 
 
 def write_registry(index):
@@ -708,7 +816,7 @@ def write_registry(index):
         lines.append(f'        data: include_str!("../../data/lexers/{e["class"]}.json"),')
         lines.append('    },')
     lines.append('];')
-    (ROOT / 'src' / 'generated' / 'registry.rs').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    write_lf(ROOT / 'src' / 'generated' / 'registry.rs', '\n'.join(lines) + '\n')
 
 
 if __name__ == '__main__':

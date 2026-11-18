@@ -320,6 +320,17 @@ pub(crate) fn delegate(
 ) {
     let mut lang = Vec::new();
     language.tokens_unprocessed(text, None, &mut lang);
+    delegate_tokens(root, lang, needle, text, out);
+}
+
+/// Port of `DelegatingLexer.get_tokens_unprocessed` over pre-tokenized `language` output.
+pub(crate) fn delegate_tokens(
+    root: &'static LexerImpl,
+    lang: Vec<Tok>,
+    needle: TokenType,
+    text: &str,
+    out: &mut Vec<Tok>,
+) {
     let mut buffered = String::new();
     let mut insertions = Vec::new();
     let mut lng_buffer = Vec::new();

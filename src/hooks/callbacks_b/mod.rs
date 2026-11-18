@@ -15,6 +15,7 @@ static CALLBACKS: &[(&str, CallbackFn)] = &[
     ("bibtex::BibTeXLexer.close_brace_callback", misc::bibtex_close),
     ("csound::CsoundOrchestraLexer.name_callback", misc::csound_name),
     ("csound::CsoundOrchestraLexer.opcode_name_callback", misc::csound_opcode_name),
+    ("email::EmailHeaderLexer.get_x_header_tokens", misc::email_x_header),
     ("fortran::FortranFixedLexer._lex_fortran", misc::fortran_fixed_line),
     ("haxe::HaxeLexer.preproc_callback", misc::haxe_preproc),
     ("lisp::SchemeLexer.decimal_cb", misc::scheme_decimal),
@@ -24,6 +25,7 @@ static CALLBACKS: &[(&str, CallbackFn)] = &[
     ("ml::SMLLexer.id_callback", misc::sml_id),
     ("rebol::RebolLexer.word_callback", rebol::rebol_word),
     ("rebol::RedLexer.word_callback", rebol::red_word),
+    ("slash::SlashLanguageLexer.right_angle_bracket", misc::slash_right_angle),
     ("urbi::UrbiscriptLexer.blob_callback", misc::urbi_blob),
     ("webmisc::XQueryLexer.operator_root_callback", webmisc::operator_root),
     ("webmisc::XQueryLexer.punctuation_root_callback", webmisc::punctuation_root),
@@ -760,6 +762,32 @@ mod tests {
                 ("Punctuation", ")"),
                 ("Operator", "+"),
                 ("Text.Whitespace", "\n"),
+            ],
+        );
+    }
+
+    #[test]
+    fn email_x_header() {
+        check("email", "X-Foo: bar\n", &[("Comment.Special", "X-Foo:"), ("Comment.Multiline", " bar\n")]);
+    }
+
+    #[test]
+    fn slash_interpolation() {
+        check(
+            "slash",
+            "<% \"a#{1}b\" %>",
+            &[
+                ("Comment.Preproc", "<%"),
+                ("Text.Whitespace", " "),
+                ("Literal.String", "\""),
+                ("Literal.String", "a"),
+                ("Literal.String.Interpol", "#{"),
+                ("Literal.Number.Integer", "1"),
+                ("Literal.String.Interpol", "}"),
+                ("Literal.String", "b"),
+                ("Literal.String", "\""),
+                ("Text.Whitespace", " "),
+                ("Comment.Preproc", "%>"),
             ],
         );
     }

@@ -16,23 +16,33 @@ pub struct TokenType(pub(crate) u16);
 
 impl TokenType {
     /// Full dotted name, e.g. `"Token.Keyword.Constant"`.
+    #[must_use]
     pub fn name(self) -> &'static str {
         TOKENS[usize::from(self.0)].0
     }
 
     /// Name without the leading `Token.`, as Pygments' test files print it
     /// (`"Keyword.Constant"`; the root is `""`).
+    #[must_use]
     pub fn short_path(self) -> &'static str {
         self.name().strip_prefix("Token.").unwrap_or("")
     }
 
     /// Pygments' short CSS class (`"kc"` for `Keyword.Constant`), empty if
     /// the type is not one of Pygments' standard types.
+    #[must_use]
     pub fn css_class(self) -> &'static str {
         TOKENS[usize::from(self.0)].2
     }
 
+    /// Whether this token type is in Pygments' `STANDARD_TYPES` table.
+    #[must_use]
+    pub fn is_standard(self) -> bool {
+        TOKENS[usize::from(self.0)].3
+    }
+
     /// The parent type, or `None` for the root [`TokenType::TOKEN`].
+    #[must_use]
     pub fn parent(self) -> Option<TokenType> {
         (self.0 != 0).then(|| TokenType(TOKENS[usize::from(self.0)].1))
     }
@@ -43,11 +53,13 @@ impl TokenType {
     }
 
     /// True if `self` is `other` or a descendant of it (Pygments' `in`).
+    #[must_use]
     pub fn is_subtype_of(self, other: TokenType) -> bool {
         self.ancestors().any(|t| t == other)
     }
 
     /// Look a type up by its dotted name, with or without the `Token.` prefix.
+    #[must_use]
     pub fn from_name(name: &str) -> Option<TokenType> {
         static BY_NAME: OnceLock<HashMap<&'static str, TokenType>> = OnceLock::new();
         let map = BY_NAME.get_or_init(|| TOKENS.iter().enumerate().map(|(i, t)| (t.0, TokenType(i as u16))).collect());
@@ -91,6 +103,8 @@ mod tests {
         assert_eq!(kc.name(), "Token.Keyword.Constant");
         assert_eq!(kc.short_path(), "Keyword.Constant");
         assert_eq!(kc.css_class(), "kc");
+        assert!(kc.is_standard());
+        assert!(!TokenType::GENERIC_PROMPT_VIRTUALENV.is_standard());
         assert_eq!(kc.parent(), Some(TokenType::KEYWORD));
         assert!(kc.is_subtype_of(TokenType::KEYWORD));
         assert!(!TokenType::KEYWORD.is_subtype_of(kc));

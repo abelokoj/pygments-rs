@@ -257,3 +257,23 @@ pub(super) fn urbi_blob(cx: &mut Cx<'_>, g: &Groups<'_>, _args: &Value) {
         }
     }
 }
+
+// -- email ----------------------------------------------------------------------
+
+/// `EmailHeaderLexer.get_x_header_tokens`: lowlight `X-` headers by default.
+pub(super) fn email_x_header(cx: &mut Cx<'_>, g: &Groups<'_>, _args: &Value) {
+    group(cx, g, 1, TokenType::COMMENT_SPECIAL);
+    group(cx, g, 2, TokenType::COMMENT_MULTILINE);
+}
+
+// -- slash ----------------------------------------------------------------------
+
+/// `SlashLanguageLexer.right_angle_bracket`: pop back out of `#{ ... }` interpolation in strings.
+pub(super) fn slash_right_angle(cx: &mut Cx<'_>, g: &Groups<'_>, _args: &Value) {
+    let string_id = cx.state("string");
+    if cx.stack.len() >= 2 && cx.stack[cx.stack.len() - 2] == string_id {
+        cx.stack.pop();
+    }
+    cx.emit(TokenType::LITERAL_STRING_INTERPOL, g.start(), g.end());
+    cx.pos = g.end();
+}

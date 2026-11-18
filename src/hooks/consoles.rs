@@ -12,7 +12,7 @@ use std::sync::LazyLock;
 
 use onig::{Regex, Region, SearchOptions};
 
-use super::{Module, do_insertions, lex_sub};
+use super::{Module, delegate, delegate_tokens, do_insertions, lex_sub};
 use crate::engine::{Tok, compile};
 use crate::lexer::LexerImpl;
 use crate::registry::by_class;
@@ -35,6 +35,7 @@ pub(crate) static MODULE: Module = Module {
         ("NodeConsoleLexer", node_console),
         ("PostgresConsoleLexer", postgres_console),
         ("PsyshConsoleLexer", psysh_console),
+        ("PythonConsoleLexer", python_console),
         ("RConsoleLexer", r_console),
         ("RubyConsoleLexer", ruby_console),
         ("SqliteConsoleLexer", sqlite_console),
@@ -362,6 +363,18 @@ fn psysh_console(_: &'static LexerImpl, text: &str, out: &mut Vec<Tok>) {
     );
 }
 
+fn python_console(_: &'static LexerImpl, text: &str, out: &mut Vec<Tok>) {
+    let (Some(py), Some(base), Some(tb)) =
+        (by_class("PythonLexer"), by_class("_PythonConsoleLexerBase"), by_class("PythonTracebackLexer"))
+    else {
+        out.push(Tok::new(TokenType::TEXT, 0, text.len()));
+        return;
+    };
+    let mut stage1 = Vec::new();
+    delegate(py, base, TokenType::OTHER_CODE, text, &mut stage1);
+    delegate_tokens(tb, stage1, TokenType::OTHER_TRACEBACK, text, out);
+}
+
 fn r_console(_: &'static LexerImpl, text: &str, out: &mut Vec<Tok>) {
     console(
         text,
@@ -576,8 +589,6 @@ static PSQL_MESSAGE: LazyLock<Regex> =
     LazyLock::new(|| re(r"((?:DEBUG|INFO|NOTICE|WARNING|ERROR|FATAL|HINT|DETAIL|CONTEXT|LINE [0-9]+):)(.*?\n)"));
 
 fn postgres_console(_: &'static LexerImpl, text: &str, out: &mut Vec<Tok>) {
-    // shortcut: PsqlRegexLexer is not in the registry yet; PostgresLexer
-    // differs only on psql backslash commands. Drops out once it is added.
     let sql = by_class("PsqlRegexLexer").or_else(|| by_class("PostgresLexer"));
     let console = by_class("BashSessionLexer");
     let lines: Vec<(usize, usize)> = lines(text).collect();

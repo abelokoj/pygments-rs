@@ -172,12 +172,36 @@ fn golden() {
             let _ = tx.send(render(&alias, &input, allow));
         });
         let ok = match rx.recv_timeout(std::time::Duration::from_secs(30)) {
-            Ok(Ok(actual)) => actual == case.expected,
+            Ok(Ok(actual)) => {
+                if actual != case.expected && std::env::var_os("DEBUG_FAILURES").is_some() {
+                    eprintln!(
+                        "=== FAIL: {} ===\nACTUAL:\n{}\nEXPECTED:\n{}",
+                        case.id,
+                        &actual[..actual.len().min(400)],
+                        &case.expected[..case.expected.len().min(400)]
+                    );
+                }
+                actual == case.expected
+            }
             Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
+                if std::env::var_os("DEBUG_FAILURES").is_some() {
+                    eprintln!("=== TIMEOUT: {} ===", case.id);
+                }
                 hangs.push(case.id.clone());
                 false
             }
-            Ok(Err(_)) | Err(_) => false,
+            Ok(Err(e)) => {
+                if std::env::var_os("DEBUG_FAILURES").is_some() {
+                    eprintln!("=== ERR: {} ===\n{e}", case.id);
+                }
+                false
+            }
+            Err(e) => {
+                if std::env::var_os("DEBUG_FAILURES").is_some() {
+                    eprintln!("=== RECV ERR: {} ===\n{e:?}", case.id);
+                }
+                false
+            }
         };
         let e = per_alias.entry(case.alias.clone()).or_default();
         e.1 += 1;
